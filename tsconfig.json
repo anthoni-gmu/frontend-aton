@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/store.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/store.js", "src/components/notification/Alert.tsx"],
   "exclude": ["node_modules"]
 }

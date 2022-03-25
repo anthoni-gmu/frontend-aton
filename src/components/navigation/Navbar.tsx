@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react'
+import { Menu, Popover, Transition } from '@headlessui/react'
 
 import {
   BookmarkAltIcon,
@@ -23,6 +23,10 @@ import {
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
 import Image from 'next/image'
+import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { logout } from '../../redux/actions/auth'
 
 const solutions = [
   {
@@ -83,11 +87,102 @@ const blogPosts = [
 ]
 
 
-const classNames = (...classes) => {
+const classNames = (...classes: any) => {
   return classes.filter(Boolean).join(' ')
 }
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated);
+
+
+  const guestLinks = () => {
+    return (
+      <Fragment>
+        <div className="flex items-center md:ml-12">
+          <Link href="/auth/login">
+            <a className="text-base font-medium text-white hover:text-indigo-500">
+              Ingresar
+            </a>
+          </Link>
+          <Link href="/auth/signup">
+            <a
+
+              className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Registrarse
+            </a>
+          </Link>
+        </div>
+
+      </Fragment>
+    )
+  }
+
+  const userLinks = () => {
+    return (
+      <Menu as="div" className="ml-3 relative">
+        <div>
+          <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+            <span className="sr-only">Open user menu</span>
+            <img
+              className="h-8 w-8 rounded-full"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+          </Menu.Button>
+        </div>
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="./dashboard/main"
+                  className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                >
+                  Dashboard
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                >
+                  Settings
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  onClick={logoutHandler}
+                  className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                >
+                  Sign out
+                </button>
+              )}
+            </Menu.Item>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+    )
+  }
+
+  const logoutHandler = () => {
+    if (dispatch && dispatch !== null && dispatch !== undefined)
+      dispatch(logout());
+  };
   return (
     <>
 
@@ -97,18 +192,21 @@ const Navbar = () => {
         <div className="relative z-20">
           <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10">
             <div>
-              <a href="#" className="flex">
-                <span className="sr-only">Workflow</span>
-                <Image
-                  className="h-8 w-auto sm:h-10"
-                  src={"/assets/cropped-logo-1.jpg"}
-                  height="45px"
-                  width="128px"
-                  layout="intrinsic"
-                  alt='logo aton'
-                  quality={100}
-                />
-              </a>
+              <Link href="/">
+
+                <a className="flex">
+                  <span className="sr-only">Workflow</span>
+                  <Image
+                    className="h-8 w-auto sm:h-10"
+                    src={"/assets/cropped-logo-1.jpg"}
+                    height="45px"
+                    width="128px"
+                    layout="intrinsic"
+                    alt='logo aton'
+                    quality={100}
+                  />
+                </a>
+              </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
               <Popover.Button className="bg-dark-700 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-indigo-500 hover:bg-dark-100 focus:outline-none ">
@@ -177,25 +275,18 @@ const Navbar = () => {
                     </>
                   )}
                 </Popover>
-                <a href="#" className="text-lg font-medium text-white hover:text-indigo-500">
-                  Productos
-                </a>
+                <Link href="/products">
+                  <a className="text-lg font-medium text-white hover:text-indigo-500">
+                    Productos
+                  </a>
+                </Link>
+
                 <a href="#" className="text-lg font-medium text-white hover:text-indigo-500">
                   Nosotros
                 </a>
 
               </Popover.Group>
-              <div className="flex items-center md:ml-12">
-                <a href="#" className="text-base font-medium text-white hover:text-indigo-500">
-                  Ingresar
-                </a>
-                <a
-                  href="#"
-                  className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                >
-                  Registrarse
-                </a>
-              </div>
+              {isAuthenticated ? userLinks() : guestLinks()}
             </div>
           </div>
         </div>

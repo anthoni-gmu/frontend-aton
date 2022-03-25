@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { CheckCircleIcon } from '@heroicons/react/solid'
 
 const Alert = () => {
-    const alert = useSelector(state => state.Alert.alert);
+    const alert = useSelector((state:any) => state.Alert.alert);
 
     const displayAlert = () => {
         if (alert !== null) {
@@ -100,3 +100,4 @@ const Alert = () => {
 }
 
 export default Alert
+
