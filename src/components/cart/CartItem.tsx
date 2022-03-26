@@ -39,6 +39,7 @@ const CartItem: FunctionComponent<{
                 try {
                     if (product.quantity >= item_count) {
                         dispatch(update_item(product, item_count));
+                        dispatch(setAlert('Carrito actualizado', 'green'));
                     }
                     else {
                         dispatch(setAlert('Not enough in stock', 'red'));
@@ -53,6 +54,7 @@ const CartItem: FunctionComponent<{
         const removeItemHandler = () => {
             if (dispatch && dispatch !== null && dispatch !== undefined)
                 dispatch(remove_item(product));
+                dispatch(setAlert('Producto Eliminado', 'red'));
         };
 
         return (
@@ -62,11 +64,10 @@ const CartItem: FunctionComponent<{
                         className="w-24 h-24 rounded-md object-center object-cover sm:w-48 sm:h-48"
                         src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.photo}`}
                         alt={product.slug}
-                        layout="responsive"
-                        height="50"
-                        width="50"
+                        layout="intrinsic"
+                        height="150"
+                        width="150"
                     />
-                    <div>gd</div>
                    
                 </div>
 

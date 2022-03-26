@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Head from "next/head";
 
 import Navbar from "../navigation/Navbar"
@@ -17,17 +17,18 @@ import {
 
 const Layout: React.FC<Props> = ({ title, content, children }) => {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated)
 
   useEffect(() => {
     if (dispatch && dispatch !== null && dispatch !== undefined) {
       dispatch(check_authenticated());
       dispatch(load_user());
       dispatch(refresh());
-
-      dispatch(get_total());
-      dispatch(get_item_total());
+      if (!isAuthenticated) {
+        dispatch(get_total());
+        dispatch(get_item_total());
+      }
       dispatch(get_items());
-
 
 
     }

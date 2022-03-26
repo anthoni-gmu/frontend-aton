@@ -147,6 +147,7 @@ export const get_item_total = () => async dispatch => {
     if (getStoreLocal('cart')) {
         total = JSON.parse(getStoreLocal('cart')).length;
     }
+    console.log("total:",total );
 
     dispatch({
         type: GET_ITEM_TOTAL,
@@ -164,7 +165,7 @@ export const update_item = (item, count) => async dispatch => {
             }
         };
 
-        const product_id = item.product.id;
+        const product_id = item.id;
         const body = JSON.stringify({ product_id, count });
 
         try {
@@ -209,7 +210,7 @@ export const update_item = (item, count) => async dispatch => {
 
 export const remove_item = item => async dispatch => {
     if (getStoreLocal('access')) {
-        const product_id = item.product.id;
+        const product_id = item.id;
         const body = JSON.stringify({ product_id });
 
 

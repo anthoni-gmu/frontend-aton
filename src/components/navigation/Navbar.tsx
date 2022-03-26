@@ -27,6 +27,7 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { logout } from '../../redux/actions/auth'
+import DropAuth from '../auth/DropAuth'
 
 const solutions = [
   {
@@ -185,8 +186,6 @@ const Navbar = () => {
   };
   return (
     <>
-
-
       <Popover className="relative bg-black">
         <div className="absolute inset-0 shadow z-30 pointer-events-none" aria-hidden="true" />
         <div className="relative z-20">
@@ -286,7 +285,7 @@ const Navbar = () => {
                 </a>
 
               </Popover.Group>
-              {isAuthenticated ? userLinks() : guestLinks()}
+              {isAuthenticated ? <DropAuth /> : guestLinks()}
             </div>
           </div>
         </div>
