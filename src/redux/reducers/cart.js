@@ -37,7 +37,6 @@ export default function Cart(state = initialState, action) {
         case GET_ITEMS_OK:
         case UPDATE_ITEM_OK:
         case REMOVE_ITEM_OK:
-
             return {
                 ...state,
                 items: payload.cart,

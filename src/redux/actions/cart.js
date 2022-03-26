@@ -33,7 +33,7 @@ export const add_item = product => async dispatch => {
             }
         };
 
-        const product_id = product.id;
+        const product_id = product;
         const body = JSON.stringify({ product_id });
 
         try {
