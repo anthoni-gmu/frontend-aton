@@ -8,16 +8,30 @@ import Alert from "../notification/Alert";
 import { Props } from '../../../types/type';
 
 import { check_authenticated, load_user, refresh } from '../../redux/actions/auth';
+import {
+  get_items,
+  get_total,
+  get_item_total
+} from '../../redux/actions/cart';
 
 
 const Layout: React.FC<Props> = ({ title, content, children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (dispatch && dispatch !== null && dispatch !== undefined)
+    if (dispatch && dispatch !== null && dispatch !== undefined) {
       dispatch(check_authenticated());
-    dispatch(load_user());
-    dispatch(refresh());
+      dispatch(load_user());
+      dispatch(refresh());
+
+      dispatch(get_total());
+      dispatch(get_item_total());
+      dispatch(get_items());
+
+
+
+    }
+
   }, [dispatch]);
 
   return (

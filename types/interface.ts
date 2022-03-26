@@ -6,4 +6,17 @@ export interface IProduct {
     compare_price: string;
     photo: string;
     slug: string;
+    quantity:number;
+}
+
+
+export interface IOrdenSumary{
+    amount:number,
+    isAuthenticated:boolean
+}
+
+export interface ICartItem{
+    id:number,
+    count:number,
+    product:IProduct
 }

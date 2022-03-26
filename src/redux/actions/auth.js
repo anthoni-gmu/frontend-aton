@@ -23,17 +23,11 @@ import { setAlert } from './alert';
 
 import axios from "axios";
 
-const getStorLocal = (item) => {
-    if (typeof localStorage !== 'undefined') {
-        return localStorage.getItem(item);
-    }
-    return null;
-}
-
+import { getStoreLocal } from "../../helpers/helpRedux";
 
 //   /jwt/verify/
 export const check_authenticated =()=> async dispatch =>{
-    if(getStorLocal('access')){
+    if(getStoreLocal('access')){
         const config={
             headers:{
                 'Accept': 'application/json',
