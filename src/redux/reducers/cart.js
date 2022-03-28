@@ -1,7 +1,5 @@
 import {
     ADD_ITEM,
-    GET_TOTAL,
-    GET_ITEM_TOTAL,
     GET_ITEMS,
     UPDATE_ITEM,
     REMOVE_ITEM,
@@ -26,10 +24,13 @@ const initialState = {
     total_items: 0
 };
 
-import { getStoreLocal, setStoreLocal,removeStoreLocal } from "../../helpers/helpRedux"
+import { getStoreLocal, setStoreLocal, removeStoreLocal } from "../../helpers/helpRedux"
 
 
 export default function Cart(state = initialState, action) {
+    let cart = []
+    let amount = 0
+    let total_items = 0
     const { type, payload } = action;
     let data = []
     switch (type) {
@@ -56,52 +57,63 @@ export default function Cart(state = initialState, action) {
                 total_items: 0
             };
         case ADD_ITEM:
+        case UPDATE_ITEM:
             setStoreLocal('cart', JSON.stringify(payload));
-            let cart = []
-            let amount = 0
-            let total_items = 0
+
 
             if (getStoreLocal('cart')) {
                 cart = JSON.parse(getStoreLocal('cart'))
                 cart = JSON.parse(cart)
-                cart=cart[0]
-                
+                cart = cart[0]
+
                 cart.map(item => {
                     amount += parseFloat(item.product.price) * parseFloat(item.count);
                 });
-                total_items=cart.length
-    
+                total_items = cart.length
+
             }
             return {
                 ...state,
-                items: payload[0],
-                amount:parseFloat(amount),
+                items: cart,
+                amount: parseFloat(amount),
                 total_items: total_items
             };
         case GET_ITEMS:
-            
+            if (getStoreLocal('cart')) {
+                cart = JSON.parse(getStoreLocal('cart'))
+                cart = JSON.parse(cart)
+                cart = cart[0]
+                // cart.map(item => {
+                //     amount += parseFloat(item.product.price) * parseFloat(item.count);
+                // });
+                // total_items = cart.length
+            }
             return {
                 ...state,
-                items: payload[0],
-                amount:parseFloat(payload[1]),
+                items: cart,
+                amount: parseFloat(payload[1]),
                 total_items: payload[2]
             };
-        
-
-        case UPDATE_ITEM:
-            setStoreLocal('cart', JSON.stringify(payload));
-            return {
-                ...state,
-                items: JSON.parse(getStoreLocal('cart'))
-            };
-
         case REMOVE_ITEM:
             setStoreLocal('cart', JSON.stringify(payload));
+            if (getStoreLocal('cart')) {
+                cart = JSON.parse(getStoreLocal('cart'))
+                cart = JSON.parse(cart)
+                cart = cart[0]
+                // cart.map(item => {
+                //     amount += parseFloat(item.product.price) * parseFloat(item.count);
+                // });
+                // total_items = cart.length
+            }
             return {
                 ...state,
-                items: JSON.parse(getStoreLocal('cart'))
+                items: cart,
+                amount: parseFloat(amount),
+                total_items: total_items
             };
-       
+
+
+
         case EMPTY_CART:
             removeStoreLocal('cart');
             return {
@@ -112,7 +124,6 @@ export default function Cart(state = initialState, action) {
             };
         case SYNCH_CART_OK:
         case SYNCH_CART_FAIL:
-            removeStoreLocal('cart');
             return {
                 ...state
             };

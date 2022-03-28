@@ -18,9 +18,11 @@ const DropCartProduct: FunctionComponent<{
         const dispatch = useDispatch();
 
         const removeItemHandler = () => {
-            if (dispatch && dispatch !== null && dispatch !== undefined)
+            if (dispatch && dispatch !== null && dispatch !== undefined) {
                 dispatch(remove_item(product));
-            dispatch(setAlert('Producto Eliminado', 'red'));
+                dispatch(setAlert('Producto Eliminado', 'red'));
+            }
+
         };
         return (
             <div className="flex w-full space-x-2 sm:space-x-1">

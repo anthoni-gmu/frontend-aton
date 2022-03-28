@@ -1,8 +1,6 @@
 import axios from 'axios';
 import {
     ADD_ITEM,
-    GET_TOTAL,
-    GET_ITEM_TOTAL,
     GET_ITEMS,
     UPDATE_ITEM,
     REMOVE_ITEM,
@@ -45,7 +43,7 @@ export const add_item = product => async dispatch => {
                     type: ADD_ITEM_OK,
                     payload: res.data
                 });
-            }  else {
+            } else {
                 dispatch({
                     type: ADD_ITEM_FAIL
                 });
@@ -56,50 +54,61 @@ export const add_item = product => async dispatch => {
 
     } else {
         let cart = [];
+        let cartres = [];
         let amount = 0.0;
         let total_items = 0;
-        let data=[]
+        let data = []
+        let count = 1
 
-        if (getStoreLocal('cart')) {
-            cart = JSON.parse(getStoreLocal('cart'))
-            cart = JSON.parse(cart)
-            cart=cart[0]
+        let order_item = {}
+
+        if (getStoreLocal('cart') && getStoreLocal('cart') !== []) {
+            cartres = JSON.parse(getStoreLocal('cart'))
+            cartres = JSON.parse(cartres)
+            cartres = cartres[0]
+            const MoreThatOne = cartres && cartres !== null && cartres !== undefined && cartres.find(element => element.product.id === product.id);
+            if (MoreThatOne !== undefined) {
+                count = MoreThatOne.count
+            }
+            if (product.quantity - count <= 0) {
+                count = product.quantity
+
+            } else {
+                if (MoreThatOne !== undefined) {
+                    count = MoreThatOne.count + 1
+                }
+            }
         }
-       
-        let shouldAddItem = true;
+        cart = []
 
-        cart.map(item => {
-            if (product.id.toString() === item.product.id.toString()) {
-                shouldAddItem = false;
+        cartres.map(cart_item => {
+            if (cart_item.product.id.toString() !== product.id.toString()) {
+                cart.push(cart_item);
             }
         });
 
-        const order_item = {
+
+        order_item = {
             product: product,
-            count:1,
-            // total_items:total_items
+            count: count,
         };
 
-        if (shouldAddItem) {
-            cart.push(order_item);
-        }
+        cart.push(order_item);
 
         if (getStoreLocal('cart')) {
             data = JSON.parse(getStoreLocal('cart'))
             data = JSON.parse(data)
-            data=data[0]
-            
+            data = data[0]
+
             data.map(item => {
                 amount += parseFloat(item.product.price) * parseFloat(item.count);
             });
-            total_items=data.length
-
+            total_items = data.length
         }
-
 
         dispatch({
             type: ADD_ITEM,
-            payload: [cart,parseFloat(amount.toFixed(2)),total_items]
+            payload: [cart, parseFloat(amount.toFixed(2)), total_items]
         });
     }
 }
@@ -136,60 +145,33 @@ export const get_items = () => async dispatch => {
         let cart = [];
         let amount = 0.0;
         let total_items = 0;
-       
+
         if (getStoreLocal('cart')) {
             cart = JSON.parse(getStoreLocal('cart'))
             cart = JSON.parse(cart)
-            cart=cart[0]
-            
-            cart.map(item => {
-                amount += parseFloat(item.product.price) * parseFloat(item.count);
-            });
-            total_items=cart.length
+            cart = cart[0]
+            if (cart !== undefined && cart !== []) {
+                cart.map(item => {
+                    amount += parseFloat(item.product.price) * parseFloat(item.count);
+                });
+                total_items = cart.length
+            } else {
+                cart = []
+                total_items = 0
+                amount = 0.0
+            }
+
+
 
         }
 
         dispatch({
             type: GET_ITEMS,
-            payload: [cart,parseFloat(amount.toFixed(2)),total_items]
+            payload: [cart, parseFloat(amount.toFixed(2)), total_items]
         });
     }
 }
 
-// export const get_total = () => async dispatch => {
-
-//     let total = 0.0;
-//     let cart = [];
-    
-//     if (getStoreLocal('cart')) {
-//         cart = JSON.parse(getStoreLocal('cart'))
-//         cart = JSON.parse(cart)
-
-//         cart.map(item => {
-//             total += parseFloat(item.product.price) * parseFloat(item.count);
-//         });
-//     }
-
-//     dispatch({
-//         type: GET_TOTAL,
-//         payload: [parseFloat(total.toFixed(2))]
-//     });
-// }
-
-
-// export const get_item_total = () => async dispatch => {
-//     let total = 0;
-
-//     if (getStoreLocal('cart')) {
-//         total = JSON.parse(getStoreLocal('cart')).length;
-//     }
-    
-
-//     dispatch({
-//         type: GET_ITEM_TOTAL,
-//         payload: total
-//     });
-// }
 
 export const update_item = (item, count) => async dispatch => {
     if (getStoreLocal('access')) {
@@ -225,20 +207,48 @@ export const update_item = (item, count) => async dispatch => {
 
     } else {
         let cart = [];
+        let cartres = [];
+        let amount = 0.0;
+        let total_items = 0;
+        let data = []
+
+        let order_item = {}
+
+        if (getStoreLocal('cart') && getStoreLocal('cart') !== []) {
+            cartres = JSON.parse(getStoreLocal('cart'))
+            cartres = JSON.parse(cartres)
+            cartres = cartres[0]
+
+        }
+        cart = []
+        cartres.map(cart_item => {
+            if (cart_item.product.id.toString() !== item.id.toString()) {
+                cart.push(cart_item);
+            }
+        });
+
+
+        order_item = {
+            product: item,
+            count: count,
+        };
+
+        cart.push(order_item);
 
         if (getStoreLocal('cart')) {
-            cart = JSON.parse(getStoreLocal('cart'));
+            data = JSON.parse(getStoreLocal('cart'))
+            data = JSON.parse(data)
+            data = data[0]
 
-            cart.map((cart_item, index) => {
-                if (cart_item.product.id.toString() === item.product.id.toString()) {
-                    cart[index].count = parseInt(count);
-                }
+            data.map(item => {
+                amount += parseFloat(item.product.price) * parseFloat(item.count);
             });
+            total_items = data.length
         }
 
         dispatch({
             type: UPDATE_ITEM,
-            payload: cart
+            payload: [cart, parseFloat(amount.toFixed(2)), total_items]
         });
     }
 }
@@ -279,23 +289,28 @@ export const remove_item = item => async dispatch => {
         }
     } else {
         let cart = [];
+        let amount = 0.0;
+        let total_items = 0;
         let new_cart = [];
 
         if (getStoreLocal('cart')) {
-            cart = JSON.parse(getStoreLocal('cart'));
-            cart = JSON.parse(cart);
+            cart = JSON.parse(getStoreLocal('cart'))
+            cart = JSON.parse(cart)
+            cart = cart[0]
 
-            cart.map(cart_item => {
-                if (cart_item.product.id.toString() !== item.id.toString()) {
-                    new_cart.push(cart_item);
+            cart.map(item_cart => {
+                amount += parseFloat(item_cart.product.price) * parseFloat(item_cart.count);
+                if (item_cart.product.id.toString() !== item.id.toString()) {
+                    new_cart.push(item_cart);
                 }
-                console.log(cart_item.product.id)
             });
+            total_items = cart.length
+
         }
 
         dispatch({
             type: REMOVE_ITEM,
-            payload: new_cart
+            payload: [new_cart, parseFloat(amount.toFixed(2)), total_items]
         });
     }
 }
@@ -347,20 +362,24 @@ export const synch_cart = () => async dispatch => {
 
     if (getStoreLocal('cart')) {
         let cart = JSON.parse(getStoreLocal('cart'));
-
+        cart = JSON.parse(cart);
+        cart = cart[0]
+        console.log(cart)
         cart.map(cart_item => {
             const item = {};
             item.product_id = cart_item.product.id;
             item.count = cart_item.count;
             cart_items.push(item);
         });
+        console.log(cart_items)
+
     }
 
     const body = JSON.stringify({ cart_items });
 
     try {
         const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/synch`, body, config);
-
+        console.log(res.status)
         if (res.status === 201) {
             dispatch({
                 type: SYNCH_CART_OK

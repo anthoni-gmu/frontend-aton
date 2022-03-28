@@ -1,12 +1,16 @@
 import Layout from '../../components/layout/Layout'
 import { useState, useEffect } from 'react'
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../redux/actions/auth'
 
 import React from 'react'
+import { synch_cart } from '../../redux/actions/cart';
+import { useRouter } from 'next/router';
 
 const Signup = () => {
     const dispatch = useDispatch();
+
+    const router = useRouter();
 
     const [accountCreated, setAccountCreated] = useState(false);
 
@@ -35,6 +39,8 @@ const Signup = () => {
         setAccountCreated(true);
         window.scrollTo(0, 0)
     }
+    if (accountCreated)
+        router.push('/auth/login');
 
     return (
         <Layout title='Registrarse | ATON' content="registrar usuario en aton">
