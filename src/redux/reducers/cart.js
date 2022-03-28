@@ -31,7 +31,7 @@ import { getStoreLocal, setStoreLocal,removeStoreLocal } from "../../helpers/hel
 
 export default function Cart(state = initialState, action) {
     const { type, payload } = action;
-
+    let data = []
     switch (type) {
         case ADD_ITEM_OK:
         case GET_ITEMS_OK:
@@ -57,26 +57,36 @@ export default function Cart(state = initialState, action) {
             };
         case ADD_ITEM:
             setStoreLocal('cart', JSON.stringify(payload));
+            let cart = []
+            let amount = 0
+            let total_items = 0
+
+            if (getStoreLocal('cart')) {
+                cart = JSON.parse(getStoreLocal('cart'))
+                cart = JSON.parse(cart)
+                cart=cart[0]
+                
+                cart.map(item => {
+                    amount += parseFloat(item.product.price) * parseFloat(item.count);
+                });
+                total_items=cart.length
+    
+            }
             return {
                 ...state,
-                items: JSON.parse(getStoreLocal('cart'))
+                items: payload[0],
+                amount:parseFloat(amount),
+                total_items: total_items
             };
         case GET_ITEMS:
+            
             return {
                 ...state,
-                items: JSON.parse(getStoreLocal('cart'))
+                items: payload[0],
+                amount:parseFloat(payload[1]),
+                total_items: payload[2]
             };
-        case GET_TOTAL:
-            return {
-                ...state,
-                amount: payload[0],
-            };
-
-        case GET_ITEM_TOTAL:
-            return {
-                ...state,
-                total_items: payload
-            };
+        
 
         case UPDATE_ITEM:
             setStoreLocal('cart', JSON.stringify(payload));

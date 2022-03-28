@@ -10,8 +10,6 @@ import { Props } from '../../../types/type';
 import { check_authenticated, load_user, refresh } from '../../redux/actions/auth';
 import {
   get_items,
-  get_total,
-  get_item_total
 } from '../../redux/actions/cart';
 
 
@@ -24,12 +22,7 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
       dispatch(check_authenticated());
       dispatch(load_user());
       dispatch(refresh());
-      if (!isAuthenticated) {
-        dispatch(get_total());
-        dispatch(get_item_total());
-      }
       dispatch(get_items());
-
 
     }
 

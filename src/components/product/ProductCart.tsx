@@ -29,6 +29,8 @@ const ProductCart: FunctionComponent<{
         const items = useSelector((state: any) => state.Cart.items)
         const total_items = useSelector((state: any) => state.Cart.total_items)
         const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated)
+        const products = useSelector((state: any) => state.Product.products)
+
 
 
         let [isOpen, setIsOpen] = useState(false)
@@ -42,19 +44,20 @@ const ProductCart: FunctionComponent<{
             if (quantity > 0) {
                 setLoading(true)
 
-                const MoreThatOne = items && items !== null && items !== undefined && items.find((element: any) => element.product.id === id);
+                // const MoreThatOne = items && items !== null && items !== undefined && items.find((element: any) => element.product.id === id);
+                const productAdd = products && products !== null && products !== undefined && products.find((element: any) => element.id === id)
+                dispatch(add_item(productAdd));
+                console.log(productAdd)
 
-                dispatch(add_item(id));
-
-                MoreThatOne === undefined ?
-                    openModal() :
-                    quantity !== 1 ?
-                        MoreThatOne.count - quantity === 0 ?
-                            dispatch(setAlert('No hay stock', 'red')) :
-                            dispatch(setAlert('Producto actualizado', 'green')) :
-                        MoreThatOne.count - quantity !== 0 ?
-                            dispatch(setAlert('Producto actualizado', 'green')) :
-                            dispatch(setAlert('No hay stock', 'red'))
+                // MoreThatOne === null ?
+                //     openModal() :
+                //     quantity !== 1 ?
+                //         MoreThatOne.count - quantity === 0 ?
+                //             dispatch(setAlert('No hay stock', 'red')) :
+                //             dispatch(setAlert('Producto actualizado', 'green')) :
+                //         MoreThatOne.count - quantity !== 0 ?
+                //             dispatch(setAlert('Producto actualizado', 'green')) :
+                //             dispatch(setAlert('No hay stock', 'red'))
 
                 setLoading(false)
 
@@ -76,15 +79,15 @@ const ProductCart: FunctionComponent<{
                         width="300"
                         alt={slug}
                     />
-                    <p className="absolute right-2 top-2 bg-white rounded-full p-2 cursor-pointer group">
+                    <p className="absolute right-2 top-2 bg-indigo-300 rounded-full p-2 cursor-pointer group">
                         {loading ? <button
-                            className="flex ml-auto text-white bg-slate-700 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-slate-500 rounded-full">
+                            className="flex ml-auto text-white bg-indigo-500 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-indigo-700 rounded-full">
                             <Oval
                                 color="#fff"
                                 width={20}
                                 height={20} />
                         </button> :
-                            <button onClick={addToCart} className="flex ml-auto text-white bg-slate-700 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-slate-500 rounded-full">
+                            <button onClick={addToCart} className="flex ml-auto text-white bg-indigo-500 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-indigo-700 rounded-full">
                                 <ShoppingCartIcon className='w-6 h-6' />
                             </button>}
                     </p>
@@ -104,11 +107,6 @@ const ProductCart: FunctionComponent<{
                         </svg>
                     </div>
                 </div>
-
-
-
-
-
 
 
                 <Transition appear show={isOpen} as={Fragment}>
@@ -149,7 +147,15 @@ const ProductCart: FunctionComponent<{
                                 <div className="inline-block w-full max-w-2xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                                     <div className='flex'>
                                         <div className="flex-none w-24 md:w-48  relative">
-                                            <img src={photo} alt={title} className="absolute rounded-lg inset-0 w-full h-full object-cover" />
+                                            <Image
+                                                src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${photo}`}
+                                                alt={title}
+                                                className="absolute rounded-lg inset-0 w-full h-full object-cover"
+                                                width={300}
+                                                height={300}
+                                                layout="responsive"
+
+                                            />
                                         </div>
                                         <div className="flex-auto p-6">
                                             <div className="flex flex-wrap border-b-2 my-4">
@@ -182,7 +188,9 @@ const ProductCart: FunctionComponent<{
                                             </div>
 
                                             <div className="flex mb-4 text-sm font-medium">
-                                                <button onClick={closeModal} className="px-4 py-2  text-base  rounded-lg  text-indigo-500 border border-indigo-500 ease-in duration-200 text-center  font-semibold shadow-md w-full hover:bg-slate-600 hover:text-white transition ">
+                                                <button onClick={closeModal}
+                                                    className="px-4 py-2  text-base  rounded-lg  text-indigo-500 border border-indigo-500 ease-in duration-200 text-center  font-semibold shadow-md w-full hover:bg-slate-600 hover:text-white transition"
+                                                >
                                                     Continuar Comprando
                                                 </button>
                                             </div>

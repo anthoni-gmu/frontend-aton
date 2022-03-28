@@ -20,8 +20,8 @@ import {
     SYNCH_CART_OK,
     SYNCH_CART_FAIL
 } from './types';
-import { getStoreLocal } from "../../helpers/helpRedux";
-
+import { getStoreLocal, setStoreLocal } from "../../helpers/helpRedux";
+import { setAlert } from './alert';
 
 export const add_item = product => async dispatch => {
     if (getStoreLocal('access')) {
@@ -33,8 +33,9 @@ export const add_item = product => async dispatch => {
             }
         };
 
-        const product_id = product;
+        const product_id = product.id;
         const body = JSON.stringify({ product_id });
+
 
         try {
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add-item`, body, config);
@@ -44,24 +45,27 @@ export const add_item = product => async dispatch => {
                     type: ADD_ITEM_OK,
                     payload: res.data
                 });
-            } else {
+            }  else {
                 dispatch({
                     type: ADD_ITEM_FAIL
                 });
             }
         } catch (err) {
-            dispatch({
-                type: ADD_ITEM_FAIL
-            });
+            dispatch(setAlert("No hay Stock", "yellow"));
         }
 
     } else {
         let cart = [];
+        let amount = 0.0;
+        let total_items = 0;
+        let data=[]
 
         if (getStoreLocal('cart')) {
             cart = JSON.parse(getStoreLocal('cart'))
+            cart = JSON.parse(cart)
+            cart=cart[0]
         }
-
+       
         let shouldAddItem = true;
 
         cart.map(item => {
@@ -72,16 +76,30 @@ export const add_item = product => async dispatch => {
 
         const order_item = {
             product: product,
-            count: 1
+            count:1,
+            // total_items:total_items
         };
 
         if (shouldAddItem) {
             cart.push(order_item);
         }
 
+        if (getStoreLocal('cart')) {
+            data = JSON.parse(getStoreLocal('cart'))
+            data = JSON.parse(data)
+            data=data[0]
+            
+            data.map(item => {
+                amount += parseFloat(item.product.price) * parseFloat(item.count);
+            });
+            total_items=data.length
+
+        }
+
+
         dispatch({
             type: ADD_ITEM,
-            payload: cart
+            payload: [cart,parseFloat(amount.toFixed(2)),total_items]
         });
     }
 }
@@ -115,45 +133,63 @@ export const get_items = () => async dispatch => {
             });
         }
     } else {
+        let cart = [];
+        let amount = 0.0;
+        let total_items = 0;
+       
+        if (getStoreLocal('cart')) {
+            cart = JSON.parse(getStoreLocal('cart'))
+            cart = JSON.parse(cart)
+            cart=cart[0]
+            
+            cart.map(item => {
+                amount += parseFloat(item.product.price) * parseFloat(item.count);
+            });
+            total_items=cart.length
+
+        }
+
         dispatch({
-            type: GET_ITEMS
+            type: GET_ITEMS,
+            payload: [cart,parseFloat(amount.toFixed(2)),total_items]
         });
     }
 }
 
-export const get_total = () => async dispatch => {
+// export const get_total = () => async dispatch => {
 
-    let total = 0.0;
-    let cart = [];
+//     let total = 0.0;
+//     let cart = [];
+    
+//     if (getStoreLocal('cart')) {
+//         cart = JSON.parse(getStoreLocal('cart'))
+//         cart = JSON.parse(cart)
 
-    if (getStoreLocal('cart')) {
-        cart = JSON.parse(getStoreLocal('cart'));
+//         cart.map(item => {
+//             total += parseFloat(item.product.price) * parseFloat(item.count);
+//         });
+//     }
 
-        cart.map(item => {
-            total += parseFloat(item.product.price) * parseFloat(item.count);
-        });
-    }
-
-    dispatch({
-        type: GET_TOTAL,
-        payload: [parseFloat(total.toFixed(2))]
-    });
-}
+//     dispatch({
+//         type: GET_TOTAL,
+//         payload: [parseFloat(total.toFixed(2))]
+//     });
+// }
 
 
-export const get_item_total = () => async dispatch => {
-    let total = 0;
+// export const get_item_total = () => async dispatch => {
+//     let total = 0;
 
-    if (getStoreLocal('cart')) {
-        total = JSON.parse(getStoreLocal('cart')).length;
-    }
-    console.log("total:",total );
+//     if (getStoreLocal('cart')) {
+//         total = JSON.parse(getStoreLocal('cart')).length;
+//     }
+    
 
-    dispatch({
-        type: GET_ITEM_TOTAL,
-        payload: total
-    });
-}
+//     dispatch({
+//         type: GET_ITEM_TOTAL,
+//         payload: total
+//     });
+// }
 
 export const update_item = (item, count) => async dispatch => {
     if (getStoreLocal('access')) {
@@ -247,11 +283,13 @@ export const remove_item = item => async dispatch => {
 
         if (getStoreLocal('cart')) {
             cart = JSON.parse(getStoreLocal('cart'));
+            cart = JSON.parse(cart);
 
             cart.map(cart_item => {
-                if (cart_item.product.id.toString() !== item.product.id.toString()) {
+                if (cart_item.product.id.toString() !== item.id.toString()) {
                     new_cart.push(cart_item);
                 }
+                console.log(cart_item.product.id)
             });
         }
 

@@ -336,7 +336,7 @@ const products = () => {
 
                                     </div>
                                     <div className="flex justify-between">
-                                        <button className={`${previous !== null ? navigationOn : navigationOff}  `} onClick={e => previousPage(e)} disabled={previous !== null ? false : true} >
+                                        <button className={`${previous !== null ? navigationOn : navigationOff}  `} onClick={e => previousPage(e)} >
                                             <div className="flex items-center -mx-1">
                                                 <ChevronLeftIcon className="w-6 h-6 mx-1" />
                                                 <span className="mx-1">
@@ -347,7 +347,7 @@ const products = () => {
                                       
 
 
-                                        <button onClick={e => nextPage(e)} className={` ${next !== null ? navigationOn : navigationOff}  `} disabled={next !== null ? false : true}>
+                                        <button onClick={e => nextPage(e)} className={` ${next !== null ? navigationOn : navigationOff}  `}>
                                             <div className="flex items-center -mx-1">
                                                 <span className="mx-1">
                                                     Siguiente

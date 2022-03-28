@@ -16,6 +16,7 @@ import {
   PhoneIcon,
   PlayIcon,
   ShieldCheckIcon,
+  ShoppingCartIcon,
   UserGroupIcon,
   ViewGridIcon,
   XIcon,
@@ -28,6 +29,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { logout } from '../../redux/actions/auth'
 import DropAuth from '../auth/DropAuth'
+import DropCartProduct from '../cart/DropCartProduct'
+import { ICartItem } from '../../../types/interface';
 
 const solutions = [
   {
@@ -55,37 +58,7 @@ const callsToAction = [
   { name: 'View All Products', href: '#', icon: CheckCircleIcon },
   { name: 'Contact Sales', href: '#', icon: PhoneIcon },
 ]
-const company = [
-  { name: 'About', href: '#', icon: InformationCircleIcon },
-  { name: 'Customers', href: '#', icon: OfficeBuildingIcon },
-  { name: 'Press', href: '#', icon: NewspaperIcon },
-  { name: 'Careers', href: '#', icon: BriefcaseIcon },
-  { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
-]
-const resources = [
-  { name: 'Community', href: '#', icon: UserGroupIcon },
-  { name: 'Partners', href: '#', icon: GlobeAltIcon },
-  { name: 'Guides', href: '#', icon: BookmarkAltIcon },
-  { name: 'Webinars', href: '#', icon: DesktopComputerIcon },
-]
-const blogPosts = [
-  {
-    id: 1,
-    name: 'Boost your conversion rate',
-    href: '#',
-    preview: 'Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum. Viverra tempor id mus.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1558478551-1a378f63328e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2849&q=80',
-  },
-  {
-    id: 2,
-    name: 'How to use search engine optimization to drive traffic to your site',
-    href: '#',
-    preview: 'Eget ullamcorper ac ut vulputate fames nec mattis pellentesque elementum. Viverra tempor id mus.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2300&q=80',
-  },
-]
+
 
 
 const classNames = (...classes: any) => {
@@ -97,6 +70,13 @@ const Navbar = () => {
   const router = useRouter();
   const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated);
 
+  const amount = useSelector((state: any) => state.Cart.amount)
+  let items = useSelector((state: any) => state.Cart.items)
+  const total_items = useSelector((state: any) => state.Cart.total_items)
+
+  // if (!isAuthenticated){
+  //   items=JSON.parse(items);
+  // };
 
   const guestLinks = () => {
     return (
@@ -118,6 +98,7 @@ const Navbar = () => {
         </div>
 
       </Fragment>
+
     )
   }
 
@@ -285,6 +266,103 @@ const Navbar = () => {
                 </a>
 
               </Popover.Group>
+              <Popover className="relative">
+                {({ open }) => (
+                  <>
+                    <Popover.Button
+                      className={`
+                  ${open ? '' : 'text-opacity-90'}
+                  text-white group bg-indigo-700 px-3 py-2 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+                    >
+                      <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                      <div className="absolute -top-3 -right-3 px-2.5 py-0.5 bg-slate-400 rounded-full text-white text-xs">{total_items}</div>
+                      <ChevronDownIcon
+                        className={`${open ? '' : 'text-opacity-70'}
+                    ml-2 h-5 w-5 text-indigo-300 group-hover:text-opacity-80 transition ease-in-out duration-150`}
+                        aria-hidden="true"
+                      />
+                    </Popover.Button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-200"
+                      enterFrom="opacity-0 translate-y-1"
+                      enterTo="opacity-100 translate-y-0"
+                      leave="transition ease-in duration-150"
+                      leaveFrom="opacity-100 translate-y-0"
+                      leaveTo="opacity-0 translate-y-1"
+                    >
+                      <Popover.Panel className=" absolute z-10 w-screen max-w-sm px-4 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0 ">
+                        <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                          <div className="relative  bg-white p-7">
+                            {
+
+                              items !== null && items.length !== 0 && items ? items.map((item: ICartItem) => (
+                                <div key={item.product.id} className="flex flex-col  sm:flex-row sm:justify-between">
+                                  <DropCartProduct item={item} />
+
+                                </div>
+
+
+                              )) :
+
+                                <div className="w-full h-full text-center">
+                                  <div className="flex h-full flex-col justify-between">
+
+                                    <ShoppingCartIcon className="mt-4 w-16 h-w-16 m-auto text-gray-600" aria-hidden="true" />
+
+
+                                    <p className="text-gray-900 text-lg font-medium mt-4">
+                                      ¡No hay productos en el carrito!
+                                    </p>
+
+                                  </div>
+                                </div>
+                            }
+
+                          </div>
+                          {
+                            items !== null && items.length !== 0 && items ?
+                              <div className="p-4 bg-gray-50 w-full ">
+                                <div className="flex flex-wrap border-b-2 my-2">
+                                  <h1 className="flex-auto text-base font-semibold ">
+                                    Total a pagar
+                                  </h1>
+                                  <div className="text-xl font-semibold text-gray-500 ">
+                                    ${amount}
+                                  </div>
+
+                                </div>
+
+                                <button type="button" className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                  Realizar Pago
+                                </button>
+                                <div className='w-full flex justify-center mt-2'>
+                                  <Link href="/cart/cartinfo" >
+                                    <a className='font-semibold hover:text-blue-700' >Ver carrito</a>
+                                  </Link>
+                                </div>
+
+                              </div> :
+
+                              <div className="p-4 bg-gray-50 w-full ">
+                                <div className='w-full flex justify-center mt-2'>
+                                  <Link href="/products" >
+                                    <a
+                                      className='py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg'
+                                    > Ver Productos</a>
+                                  </Link>
+                                </div>
+
+                              </div>
+                          }
+
+                        </div>
+                      </Popover.Panel>
+                    </Transition>
+                  </>
+                )}
+              </Popover>
+
               {isAuthenticated ? <DropAuth /> : guestLinks()}
             </div>
           </div>
