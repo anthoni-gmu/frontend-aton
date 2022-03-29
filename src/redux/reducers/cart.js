@@ -83,10 +83,7 @@ export default function Cart(state = initialState, action) {
                 cart = JSON.parse(getStoreLocal('cart'))
                 cart = JSON.parse(cart)
                 cart = cart[0]
-                // cart.map(item => {
-                //     amount += parseFloat(item.product.price) * parseFloat(item.count);
-                // });
-                // total_items = cart.length
+                
             }
             return {
                 ...state,
@@ -100,10 +97,10 @@ export default function Cart(state = initialState, action) {
                 cart = JSON.parse(getStoreLocal('cart'))
                 cart = JSON.parse(cart)
                 cart = cart[0]
-                // cart.map(item => {
-                //     amount += parseFloat(item.product.price) * parseFloat(item.count);
-                // });
-                // total_items = cart.length
+                cart.map(item => {
+                    amount += parseFloat(item.product.price) * parseFloat(item.count);
+                });
+                total_items = cart.length
             }
             return {
                 ...state,

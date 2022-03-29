@@ -20,7 +20,7 @@ const DropCartProduct: FunctionComponent<{
         const removeItemHandler = () => {
             if (dispatch && dispatch !== null && dispatch !== undefined) {
                 dispatch(remove_item(product));
-                dispatch(setAlert('Producto Eliminado', 'red'));
+                dispatch(setAlert('Producto Eliminado del Carrito de Compras', 'yellow'));
             }
 
         };

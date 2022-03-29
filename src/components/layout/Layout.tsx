@@ -40,8 +40,9 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
         <meta name='description' content={content} />
       </Head>
       <Navbar />
-      <main>{children}</main>
       <Alert />
+
+      <main>{children}</main>
       <Footer />
     </>
   )

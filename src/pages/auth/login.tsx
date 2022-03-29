@@ -41,11 +41,11 @@ const Login = () => {
               src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Inicia sesión con tu cuenta</h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Or{' '}
+              O{' '}
               <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                start your 14-day free trial
+                crea una cuenta gratuitamente.
               </a>
             </p>
           </div>
@@ -122,7 +122,7 @@ const Login = () => {
                     <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                       <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                     </span>
-                    Sign in
+                    Ingresar
                   </button>
                 )
               }

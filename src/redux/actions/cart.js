@@ -49,7 +49,7 @@ export const add_item = product => async dispatch => {
                 });
             }
         } catch (err) {
-            dispatch(setAlert("No hay Stock", "yellow"));
+            
         }
 
     } else {

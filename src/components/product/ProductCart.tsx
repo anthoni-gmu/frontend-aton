@@ -46,13 +46,12 @@ const ProductCart: FunctionComponent<{
                 const productAdd = products && products !== null && products !== undefined && products.find((element: any) => element.id === id)
 
                 const MoreThatOne = items && items !== null && items !== undefined && items.find((element: any) => element.product.id === id);
-
                 MoreThatOne === undefined ?
                     openModal() :
                     quantity !== 1 ?
-                        items.count - quantity === 0 ?
-                            dispatch(setAlert('No hay stock', 'red')) :
-                            dispatch(setAlert('Producto actualizado', 'green')) :
+                        MoreThatOne.count - quantity === 0 ?
+                            dispatch(setAlert('No hay stock', 'yellow')) :
+                            dispatch(setAlert('Producto actualizadoasd', 'green')) :
                         MoreThatOne.count - quantity !== 0 ?
                             dispatch(setAlert('Producto actualizado', 'green')) :
                             dispatch(setAlert('No hay stock', 'red'))
