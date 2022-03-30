@@ -3,6 +3,8 @@ import {
     PRODUCTS_HOME_FAIL,
     PRODUCTS_OK,
     PRODUCTS_FAIL,
+    PRODUCT_OK,
+    PRODUCT_FAIL
 } from './types';
 
 import axios from "axios";
@@ -68,7 +70,6 @@ export const products_all = () => async dispatch => {
 
 }
 export const get_pages_products = (url) => async dispatch => {
-
     const config = {
         headers: {
             'Accept': 'application/json'
@@ -92,6 +93,36 @@ export const get_pages_products = (url) => async dispatch => {
     } catch (err) {
         dispatch({
             type: PRODUCTS_FAIL
+        });
+    }
+
+}
+
+export const product_detail = (slug) => async dispatch => {
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api${slug}`, config);
+
+        if (res.status === 200) {
+
+            dispatch({
+                type: PRODUCT_OK,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: PRODUCT_FAIL
+            });
+        }
+
+    } catch (err) {
+        dispatch({
+            type: PRODUCT_FAIL
         });
     }
 

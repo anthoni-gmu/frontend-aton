@@ -39,6 +39,9 @@ export const PRODUCTS_HOME_FAIL="PRODUCTS_HOME_FAIL"
 export const PRODUCTS_OK="PRODUCTS_OK"
 export const PRODUCTS_FAIL="PRODUCTS_FAIL"
 
+export const PRODUCT_OK="PRODUCT_OK"
+export const PRODUCT_FAIL="PRODUCT_FAIL"
+
 
 // Carrito Local (frontend)
 export const ADD_ITEM = 'ADD_ITEM';

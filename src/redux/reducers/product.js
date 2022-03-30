@@ -3,6 +3,8 @@ import {
     PRODUCTS_HOME_OK,
     PRODUCTS_OK,
     PRODUCTS_FAIL,
+    PRODUCT_OK,
+    PRODUCT_FAIL
 } from '../actions/types'
 
 const initialState = {
@@ -10,6 +12,11 @@ const initialState = {
     count: 0,
     previous: null,
     next: null,
+    characteristic:null,
+    images:null,
+    related:null,
+    colors:null,
+    product:null
 }
 
 export default function Product(state = initialState, action) {
@@ -20,6 +27,24 @@ export default function Product(state = initialState, action) {
             return {
                 ...state,
                 products: payload.results,
+            }
+        case PRODUCT_OK:
+            return {
+                ...state,
+                characteristic:payload.characteristic,
+                images:payload.images,
+                related:payload.related,
+                colors:payload.colors,
+                product:payload.product
+            }
+        case PRODUCT_FAIL:
+            return {
+                ...state,
+                characteristic:null,
+                images:null,
+                related:null,
+                colors:null,
+                product:null
             }
         case PRODUCTS_HOME_FAIL:
             return {

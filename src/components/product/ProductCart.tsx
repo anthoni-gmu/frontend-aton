@@ -92,7 +92,13 @@ const ProductCart: FunctionComponent<{
                 </div>
                 <div className="mt-4 pl-2 mb-2 flex justify-between ">
                     <div>
-                        <p className="text-lg font-semibold text-gray-900 mb-0">{title}</p>
+                        <Link href={{
+                            pathname: '/product/[slug]',
+                            query: { slug: slug },
+                        }}>
+                            <p className="text-lg font-semibold text-gray-900 mb-0">{title}</p>
+                        </Link>
+
                         <div className='flex '>
                             <p className="text-md text-gray-800 mt-0 mx-2 line-through">S/{compare_price}</p>
                             <p className="text-lg font-semibold text-gray-800 mt-0 mx-2">S/{price}</p>
