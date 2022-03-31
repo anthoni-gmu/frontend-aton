@@ -364,14 +364,12 @@ export const synch_cart = () => async dispatch => {
         let cart = JSON.parse(getStoreLocal('cart'));
         cart = JSON.parse(cart);
         cart = cart[0]
-        console.log(cart)
         cart.map(cart_item => {
             const item = {};
             item.product_id = cart_item.product.id;
             item.count = cart_item.count;
             cart_items.push(item);
         });
-        console.log(cart_items)
 
     }
 
@@ -379,7 +377,6 @@ export const synch_cart = () => async dispatch => {
 
     try {
         const res = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/synch`, body, config);
-        console.log(res.status)
         if (res.status === 201) {
             dispatch({
                 type: SYNCH_CART_OK

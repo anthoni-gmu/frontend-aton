@@ -40,6 +40,7 @@ const ProductCart: FunctionComponent<{
         function openModal() {
             setIsOpen(true)
         }
+
         const addToCart = async () => {
             if (quantity > 0) {
                 setLoading(true)
@@ -55,11 +56,14 @@ const ProductCart: FunctionComponent<{
                         MoreThatOne.count - quantity !== 0 ?
                             dispatch(setAlert('Producto actualizado', 'green')) :
                             dispatch(setAlert('No hay stock', 'red'))
+
                 dispatch(add_item(productAdd));
 
                 setLoading(false)
 
 
+            }else{
+                dispatch(setAlert('No hay stock', 'red'))
             }
         }
 

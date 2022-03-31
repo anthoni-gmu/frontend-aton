@@ -3,20 +3,25 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from '../../components/layout/Layout'
+import ProductImages from '../../components/product/ProductImages'
 import { product_detail } from '../../redux/actions/product'
 
 const Product = () => {
   const router = useRouter()
   const { slug } = router.query
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (dispatch && dispatch !== null && dispatch !== undefined && slug !== undefined)
       dispatch(product_detail(router.asPath));
+
 
   }, [router.asPath]);
   const images = useSelector((state: any) => state.Product.images)
   const product = useSelector((state: any) => state.Product.product)
 
+  
+ 
 
   return (
     <Layout title="Producto | Aton" content='slug'>
@@ -24,42 +29,8 @@ const Product = () => {
         <div className="container px-5 py-10 max-w-7xl mx-auto">
           {
             product && product !== null && product !== undefined && <div className=" mx-auto flex flex-wrap">
-              <div className="lg:w-1/2  sm:w-1/2 flex flex-col space-x-2 ">
-                <Image
-                  alt={product.slug}
-                  className="sm:w-1/2 lg:h-auto h-64 object-cover object-center rounded"
-                  src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.photo}`}
-                  layout="responsive"
-                  height="300"
-                  width="300"
-                />
-                <div className='flex m-3'>
-                  <Image
-                    alt={product.slug}
-                    className=" object-cover object-center rounded"
-                    src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.photo}`}
-                    layout="intrinsic"
-                    height="450"
-                    width="450"
-                  />
-                  <Image
-                    alt={product.slug}
-                    className=" object-cover object-center rounded"
-                    src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.photo}`}
-                    layout="intrinsic"
-                    height="450"
-                    width="450"
-                  />
-                  <Image
-                    alt={product.slug}
-                    className=" object-cover object-center rounded"
-                    src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.photo}`}
-                    layout="intrinsic"
-                    height="450"
-                    width="450"
-                  />
-                </div>
-              </div>
+              <ProductImages main={product.photo} title={product.title} images={images}/>
+             
 
               <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <h2 className="text-sm title-font text-gray-500 tracking-widest">{product.get_category}</h2>

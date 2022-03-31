@@ -9,7 +9,6 @@ export interface IProduct {
     quantity:number;
 }
 
-
 export interface IOrdenSumary{
     amount:number,
     isAuthenticated:boolean

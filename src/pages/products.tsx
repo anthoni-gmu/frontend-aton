@@ -9,7 +9,6 @@ import { ChevronDownIcon, FilterIcon, MinusSmIcon, PlusSmIcon, ViewGridIcon } fr
 import { useDispatch, useSelector } from 'react-redux';
 
 import { get_pages_products, products_all } from '../redux/actions/product';
-import Image from 'next/image';
 import ProductCart from '../components/product/ProductCart';
 const sortOptions = [
     { name: 'Most Popular', href: '#', current: true },
@@ -344,7 +343,7 @@ const products = () => {
                                                 </span>
                                             </div>
                                         </button>
-                                      
+
 
 
                                         <button onClick={e => nextPage(e)} className={` ${next !== null ? navigationOn : navigationOff}  `}>
