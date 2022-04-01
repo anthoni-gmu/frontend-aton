@@ -14,6 +14,8 @@ const ProductImages: FunctionComponent<{
     const ChangePhoto = (photo: any) => {
         setViewPhoto(photo)
     }
+console.log(viewPhoto);
+
     return (
         <div className="lg:w-1/2  sm:w-1/2 flex flex-col space-x-2 mt-3 ">
             <Image

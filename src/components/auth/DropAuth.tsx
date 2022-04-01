@@ -2,27 +2,17 @@ import React, { Fragment, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/auth';
 import { Menu, Popover, Transition } from '@headlessui/react';
-import { ShoppingCartIcon } from '@heroicons/react/outline';
-import { ChevronDownIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
-import { ICartItem, IProduct } from '../../../types/interface';
-import DropCartProduct from '../cart/DropCartProduct';
+
 
 const DropAuth = () => {
     const dispatch = useDispatch();
-
-    const amount = useSelector((state: any) => state.Cart.amount)
-    const items = useSelector((state: any) => state.Cart.items)
-    const total_items = useSelector((state: any) => state.Cart.total_items)
 
     const logoutHandler = () => {
         if (dispatch && dispatch !== null && dispatch !== undefined)
             dispatch(logout());
     };
-    const [render, setRender] = useState(false);
-    const [redirect, setRedirect] = useState(false);
-
-
+  
     const usertest = {
         name: 'Tom Cook',
         email: 'tom@example.com',
@@ -34,9 +24,8 @@ const DropAuth = () => {
     }
 
     const userNavigation = [
-        { name: 'Panel de control', to: '#' },
+        { name: 'Panel de control', to: '/dashboard/main' },
         { name: 'Settings', to: '#' },
-        { name: 'Sign out', to: '#' },
     ]
 
     return (
@@ -47,7 +36,7 @@ const DropAuth = () => {
 
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="ml-3 relative z-10">
+                <Menu as="div" className="ml-3 relative z-auto">
                     <div>
                         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                             <span className="sr-only">Open user menu</span>
@@ -63,28 +52,28 @@ const DropAuth = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                     >
-                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            {/* {userNavigation.map((item) => (
+                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-200 ring-1 ring-black ring-opacity-5 focus:outline-none p-2">
+                            {userNavigation.map((item) => (
                                 <Menu.Item key={item.name}>
                                     {({ active }) => (
-                                        <Link href="#" >
+                                        <Link href={item.to} >
                                             <a className={classNames(
-                                                active ? 'bg-gray-100' : '',
-                                                'block px-4 py-2 text-sm text-gray-700'
+                                                active ? 'bg-dark-700' : '',
+                                                'block px-4 py-2 text-lg text-white w-full hover:bg-dark-700'
                                             )}>  {item.name}</a>
 
                                         </Link>
                                     )}
                                 </Menu.Item>
 
-                            ))} */}
+                            ))}
                             <Menu.Item key="logout">
                                 {({ active }) => (
                                     <button
                                         onClick={logoutHandler}
                                         className={classNames(
-                                            active ? 'bg-gray-100' : '',
-                                            'block px-4 py-2 text-sm text-gray-700 w-full'
+                                            active ? 'bg-dark-700' : '',
+                                            'block px-4 py-2 text-lg text-left text-white w-full '
                                         )}
                                     >
                                         Salir

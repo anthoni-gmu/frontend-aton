@@ -1,10 +1,13 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from '../../components/layout/Layout'
 import ProductImages from '../../components/product/ProductImages'
+import { setAlert } from '../../redux/actions/alert'
+import { add_item } from '../../redux/actions/cart'
 import { product_detail } from '../../redux/actions/product'
+import ModalAddProduct from '../../components/cart/ModalAddProduct'
 
 const Product = () => {
   const router = useRouter()
@@ -19,9 +22,44 @@ const Product = () => {
   }, [router.asPath]);
   const images = useSelector((state: any) => state.Product.images)
   const product = useSelector((state: any) => state.Product.product)
+  const [loading, setLoading] = useState(false);
+  const items = useSelector((state: any) => state.Cart.items)
+  const total_items = useSelector((state: any) => state.Cart.total_items)
+  const amount = useSelector((state: any) => state.Cart.amount)
 
-  
- 
+  let [isOpen, setIsOpen] = useState(false)
+  function closeModal() {
+    setIsOpen(false)
+  }
+  function openModal() {
+    setIsOpen(true)
+  }
+
+  const addToCart = async () => {
+    if (product.quantity > 0) {
+      setLoading(true)
+      const productAdd = product
+      const MoreThatOne = items && items !== null && items !== undefined && items.find((element: any) => element.product.id === product.id);
+      MoreThatOne === undefined ?
+        openModal() :
+        product.quantity !== 1 ?
+          MoreThatOne.count - product.quantity === 0 ?
+            dispatch(setAlert('No hay stock', 'yellow')) :
+            dispatch(setAlert('Producto actualizado', 'green')) :
+          MoreThatOne.count - product.quantity !== 0 ?
+            dispatch(setAlert('Producto actualizado', 'green')) :
+            dispatch(setAlert('No hay stock', 'red'))
+
+      dispatch(add_item(productAdd));
+
+      setLoading(false)
+
+
+    } else {
+      dispatch(setAlert('No hay stock', 'red'))
+    }
+  }
+
 
   return (
     <Layout title="Producto | Aton" content='slug'>
@@ -29,8 +67,8 @@ const Product = () => {
         <div className="container px-5 py-10 max-w-7xl mx-auto">
           {
             product && product !== null && product !== undefined && <div className=" mx-auto flex flex-wrap">
-              <ProductImages main={product.photo} title={product.title} images={images}/>
-             
+              <ProductImages main={product.photo} title={product.title} images={images} />
+              <ModalAddProduct isOpen={isOpen} closeModal={closeModal} photo={product.photo} title={product.title} price={product.price} total_items={total_items} amount={amount} />
 
               <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <h2 className="text-sm title-font text-gray-500 tracking-widest">{product.get_category}</h2>
@@ -81,12 +119,14 @@ const Product = () => {
                     <span className="title-font font-medium text-2xl text-gray-900">S/{product.price}</span>
                   </div>
 
-                  <button className=" ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Button</button>
+                  <button  onClick={addToCart} className=" ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Agregar</button>
                   <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                     <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                       <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                     </svg>
                   </button>
+
+
                 </div>
               </div>
             </div>
