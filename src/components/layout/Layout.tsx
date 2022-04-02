@@ -13,25 +13,36 @@ import {
   synch_cart
 } from '../../redux/actions/cart';
 
+import { get_account } from '../../redux/actions/profile';
+
 
 const Layout: React.FC<Props> = ({ title, content, children }) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated)
   const items = useSelector((state: any) => state.Cart.items)
-
+  console.log(isAuthenticated);
+  
   useEffect(() => {
     if (dispatch && dispatch !== null && dispatch !== undefined) {
+
       dispatch(check_authenticated());
       dispatch(load_user());
       dispatch(refresh());
-      if(isAuthenticated&&items!==null &&items!==[]){
-        dispatch(synch_cart());
+      dispatch(get_account());
+
+      if (isAuthenticated) {
+        if (items !== null && items !== []) {
+          dispatch(synch_cart());
+        }
       }
       dispatch(get_items());
 
     }
 
   }, [dispatch]);
+
+
+  
 
   return (
     <>

@@ -7,8 +7,8 @@ import { IProduct } from '../../../types/interface'
 import { setAlert } from '../../redux/actions/alert';
 import { add_item } from '../../redux/actions/cart';
 import { ShoppingCartIcon } from '@heroicons/react/outline';
-import { Oval } from 'react-loader-spinner';
 import ModalAddProduct from '../cart/ModalAddProduct';
+import { useRouter } from 'next/router';
 const ProductCart: FunctionComponent<{
     product: IProduct;
 }> = ({
@@ -31,6 +31,7 @@ const ProductCart: FunctionComponent<{
         const total_items = useSelector((state: any) => state.Cart.total_items)
         const products = useSelector((state: any) => state.Product.products)
 
+        const router=useRouter()
         let [isOpen, setIsOpen] = useState(false)
         function closeModal() {
             setIsOpen(false)
@@ -38,7 +39,8 @@ const ProductCart: FunctionComponent<{
         function openModal() {
             setIsOpen(true)
         }
-
+        console.log(router.pathname)
+        console.log(photo)
         const addToCart = async () => {
             if (quantity > 0) {
                 setLoading(true)
@@ -59,15 +61,26 @@ const ProductCart: FunctionComponent<{
                 setLoading(false)
 
 
-            }else{
+            } else {
                 dispatch(setAlert('No hay stock', 'red'))
             }
         }
 
-
-        return (
-
-
+        const WhisList = (
+            <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4  gap-2' >
+                    <div className="max-w-xs rounded-md shadow-md dark:bg-coolGray-900 dark:text-coolGray-100 m-3">
+                        <img src="https://source.unsplash.com/random/300x300/?2" alt="" className="object-cover object-center w-full rounded-t-md h-72 dark:bg-coolGray-500" />
+                        <div className="flex flex-col justify-between p-6 space-y-8">
+                            <div className="space-y-2">
+                                <h2 className="text-3xl font-semibold tracking-wide">Donec lectus leo</h2>
+                                <p className="dark:text-coolGray-100">Curabitur luctus erat nunc, sed ullamcorper erat vestibulum eget.</p>
+                            </div>
+                            <button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-coolGray-900">Read more</button>
+                        </div>
+                    </div>
+                </div>
+        )
+        const productList = (
             <div key={id} className="relative max-w-sm  bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer">
                 <div className="overflow-x-hidden rounded-2xl relative">
                     <Image
@@ -81,10 +94,7 @@ const ProductCart: FunctionComponent<{
                     <p className="absolute right-2 top-2 bg-indigo-300 rounded-full p-2 cursor-pointer group">
                         {loading ? <button
                             className="flex ml-auto text-white bg-indigo-500 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-indigo-700 rounded-full">
-                            <Oval
-                                color="#fff"
-                                width={20}
-                                height={20} />
+                            xd
                         </button> :
                             <button onClick={addToCart} className="flex ml-auto text-white bg-indigo-500 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-indigo-700 rounded-full">
                                 <ShoppingCartIcon className='w-6 h-6' />
@@ -112,10 +122,16 @@ const ProductCart: FunctionComponent<{
                         </svg>
                     </div>
                 </div>
-                <ModalAddProduct isOpen={isOpen} closeModal={closeModal} photo={photo} title={title} price={price} total_items={total_items} amount={amount}/>
+                <ModalAddProduct isOpen={isOpen} closeModal={closeModal} photo={photo} title={title} price={price} total_items={total_items} amount={amount} />
 
             </div>
-
+        )
+        return (
+            <>
+                {
+                    productList
+                }
+            </>
         )
     }
 

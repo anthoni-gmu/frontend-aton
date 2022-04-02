@@ -1,3 +1,4 @@
+
 export interface IProduct {
     id:number,
     get_category: string;
@@ -18,4 +19,9 @@ export interface ICartItem{
     id:number,
     count:number,
     product:IProduct
+}
+export interface INavbarDashboard{
+    name:string,
+    to:string,
+    HeartIcon(props: React.ComponentProps<'svg'>): JSX.Element
 }

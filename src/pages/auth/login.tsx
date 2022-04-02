@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Layout from '../../components/layout/Layout'
 import { login } from '../../redux/actions/auth'
 import { LockClosedIcon } from '@heroicons/react/solid'
-import Loader, { Oval } from 'react-loader-spinner';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
@@ -109,11 +109,7 @@ const Login = () => {
                   type="submit"
                   className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  <Oval
-                    color='#00bfff'
-                    width={50}
-                    height={50}
-                  />
+                 xd
                 </button>) : (
                   <button
                     type="submit"
