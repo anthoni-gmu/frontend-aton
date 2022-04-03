@@ -38,16 +38,14 @@ export const get_account = () => async dispatch => {
     }
 }
 
-// TODO:Update user typescript
 export const update_account = (
-    enterprice,
-    photo,
-    city,
-    address_line_1,
-    address_line_2,
-    district,
-    zipcode,
-    phone
+    enterprise_form,
+    city_form,
+    address_line_1_form,
+    address_line_2_form,
+    district_form,
+    zipcode_form,
+    phone_form
 ) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -59,14 +57,13 @@ export const update_account = (
         };
 
         const body = JSON.stringify({
-            enterprice,
-            photo,
-            city,
-            address_line_1,
-            address_line_2,
-            district,
-            zipcode,
-            phone
+            enterprise_form,
+            city_form,
+            address_line_1_form,
+            address_line_2_form,
+            district_form,
+            zipcode_form,
+            phone_form
         });
 
         try {

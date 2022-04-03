@@ -58,7 +58,7 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
             </Head>
 
             <SidebarDashboard />
-            <div className="md:pl-64 flex flex-col flex-1">
+            <div className="md:pl-64 flex flex-col flex-1 min-h-screen">
                 <div className="sticky top-0 z-10 flex-shrink-0 flex h-16  bg-white dark:bg-gray-800 shadow">
                     <button
                         type="button"
@@ -75,7 +75,7 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
 
                 </div>
 
-                <main className="flex-1">
+                <main className="flex-1 bg-slate-400 dark:bg-gray-700 ">
                     {children}
 
                 </main>

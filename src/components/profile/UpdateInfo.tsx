@@ -1,158 +1,219 @@
 import { SaveIcon } from '@heroicons/react/outline'
-import React, { FunctionComponent } from 'react'
+import Image from 'next/image'
+import React, { FunctionComponent, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { IProfile, IUser } from '../../../types/interface'
-
+import { cities } from '../../helpers/cities'
+import { update_account } from '../../redux/actions/profile'
 const UpdateInfo: FunctionComponent<{
-    onSubmit: (e: any) => void,
     user: IUser,
-    onChange: (e: any) => void,
     profile: IProfile,
-    enterprice: string,
-    photo: string,
-    city: string,
-    address_line_1: string,
-    address_line_2: string,
-    district: string,
-    zipcode: string,
-    phone: string
-    loading: boolean
-
+    loading: boolean,
+    setLoading: (value: boolean) => void,
+    ViewInfo: () => void
 }> = ({
-    onSubmit,
     user: {
         get_full_name
     },
-    onChange,
     profile: {
-
+        photo,
+        address_line_1,
+        address_line_2,
+        district,
+        zipcode,
+        phone,
+        city,
+        enterprise
     },
-    enterprice,
-    photo,
-    city,
-    address_line_1,
-    address_line_2,
-    district,
-    zipcode,
-    phone,
-    loading
+    setLoading,
+    loading,
+    ViewInfo
 }) => {
-        return (
-            <form onSubmit={e => onSubmit(e)} className="py-4">
+        const dispatch = useDispatch();
 
-                <div className="bg-white max-w-screen-2xl shadow overflow-hidden sm:rounded-lg">
-                    <div className="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
-                        <div className="max-w-sm mx-auto md:w-full md:mx-0">
+        const [formData, setFormData] = useState({
+            enterprise_form: enterprise,
+            city_form: city,
+            address_line_1_form: address_line_1,
+            address_line_2_form: address_line_2,
+            district_form: district,
+            zipcode_form: zipcode,
+            phone_form: phone,
+        });
+
+        const {
+            enterprise_form,
+            city_form,
+            address_line_1_form,
+            address_line_2_form,
+            district_form,
+            zipcode_form,
+            phone_form
+        } = formData;
+        const onChange = (e: React.FormEvent<HTMLInputElement>): void => setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
+
+        const onSubmit = (e: React.SyntheticEvent) => {
+            e.preventDefault();
+            setLoading(true)
+            if (dispatch && dispatch !== null && dispatch !== undefined) {
+                dispatch(update_account(
+                    enterprise_form,
+                    city_form,
+                    address_line_1_form,
+                    address_line_2_form,
+                    district_form,
+                    zipcode_form,
+                    phone_form
+                ))
+
+            }
+            setLoading(false)
+            ViewInfo()
+            window.scrollTo(0, 0);
+        };
+
+
+        return (
+            <form onSubmit={e => onSubmit(e)} className="">
+
+                <div className="bg-white dark:bg-dark-100 max-w-screen-2xl shadow overflow-hidden sm:rounded-lg">
+                    <div className="p-4 bg-gray-100 border-t-4 border-indigo-400 dark:border-gray-400 rounded-lg bg-opacity-5">
+                        <div className="max-w-lg mx-auto md:w-full md:mx-0">
                             <div className="inline-flex items-center space-x-4">
                                 <div className="block relative">
-                                    <img alt="profil" src="https://www.tailwind-kit.com/images/person/1.jpg" className="mx-auto object-cover rounded-full h-16 w-16 " />
+                                    <Image
+                                        alt={get_full_name}
+                                        src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${photo}`}
+                                        className="mx-auto object-cover rounded-full h-16 w-16 "
+                                        layout="fixed"
+                                        height="85"
+                                        width="85"
+                                    />
                                 </div>
-                                <h1 className="text-gray-600">
+                                <h1 className="text-gray-600 dark:text-green-400 text-xl font-semibold uppercase">
                                     {get_full_name}
                                 </h1>
                             </div>
                         </div>
                     </div>
-                    <div className="border-t border-gray-200">
+                    <div className="border-t-4 border-gray-200 dark:border-gray-400">
                         <dl>
 
-                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">
+                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
                                     Dirección 1
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
-                                        name='address_line_1'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                                        name='address_line_1_form'
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
-                                        value={address_line_1}
+                                        value={address_line_1_form}
+                                        placeholder={address_line_1}
                                     />
                                 </dd>
 
                             </div>
-                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">
+                            <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
                                     Dirección 2
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
-                                        name='address_line_2'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                                        name='address_line_2_form'
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-gray-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
-                                        value={address_line_2}
+                                        value={address_line_2_form}
+                                        placeholder={address_line_2}
                                     />
                                 </dd>
                             </div>
-                            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">
-                                    Ciudad
+                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                                    Distrito
                                 </dt>
-                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
-                                        name='city'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                                        name='district_form'
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
-                                        value={city}
+                                        value={district_form}
+                                        placeholder={district}
                                     />
                                 </dd>
+
                             </div>
-                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">
-                                    Provincia
-                                </dt>
-                                <input
-                                    type="text"
-                                    name='state_province_region'
-                                    className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                                    onChange={e => onChange(e)}
-                                    value={district}
-                                />
-                            </div>
-                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">
+                            <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
                                     Número Postal
                                 </dt>
-                                <input
-                                    type="text"
-                                    name='zipcode'
-                                    className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                                    onChange={e => onChange(e)}
-                                    value={zipcode}
-                                />
+                                <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <input
+                                        type="text"
+                                        name='zipcode_form'
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-gray-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        onChange={e => onChange(e)}
+                                        value={zipcode_form}
+                                        placeholder={zipcode}
+                                    />
+                                </dd>
                             </div>
-                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">
+                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
                                     Teléfono
                                 </dt>
-                                <input
-                                    type="text"
-                                    name='phone'
-                                    className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                                    onChange={e => onChange(e)}
-                                    value={phone}
-                                />
+                                <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <input
+                                        type="text"
+                                        name='phone_form'
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        onChange={e => onChange(e)}
+                                        value={phone_form}
+                                        placeholder={phone}
+                                    />
+                                </dd>
+
                             </div>
-                            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-sm font-medium text-gray-500">
-                                    Pais
+
+
+                            <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                                    Provincia
                                 </dt>
-                                {/* 
+
                                 <select
-                                    className="block w-52 text-gray-700 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                                    id='country_region'
-                                    name='country_region'
-                                    onChange={e => onChange(e)}
+                                    className="block w-52 text-gray-700 dark:text-gray-100 py-2 px-3 border text-lg border-gray-300 bg-white dark:bg-gray-500 rounded-md shadow-sm "
+                                    id='city_form'
+                                    name='city_form'
+                                    onChange={(e: any) => onChange(e)}
                                 >
-                                    <option value={country_region}>{profile.country_region}
+                                    <option className='bg-white dark:bg-slate-500 ' value={city_form}>{city}
                                     </option>
                                     {
-                                        countries && countries.map((country, index) => (
-                                            <option key={index} value={country.name}>{country.name}</option>
+                                        cities && cities.map((country, index) => (
+                                            <option className='dark:bg-slate-500 ' key={index} value={country.name}>{country.name}</option>
                                         ))
                                     }
-                                </select> */}
+                                </select>
+
+                            </div>
+                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                                    Empresa
+                                </dt>
+                                <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <input
+                                        type="text"
+                                        name='enterprise_form'
+                                        className="rounded-lg border-transparent flex-1 uppercase appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        onChange={e => onChange(e)}
+                                        value={enterprise_form}
+                                        placeholder={enterprise}
+                                    />
+                                </dd>
 
                             </div>
                         </dl>

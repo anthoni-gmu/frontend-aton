@@ -11,7 +11,7 @@ export interface IProduct {
 }
 export interface IProfile {
     id: number,
-    enterprice: string;
+    enterprise: string;
     photo: string;
     city: string;
     address_line_1: string;
