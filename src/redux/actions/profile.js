@@ -30,7 +30,7 @@ export const get_account = () => async dispatch => {
                     type: GET_ACCOUNT_FAIL
                 });
             }
-        } catch(err) {
+        } catch (err) {
             dispatch({
                 type: GET_ACCOUNT_FAIL
             });
@@ -40,13 +40,14 @@ export const get_account = () => async dispatch => {
 
 // TODO:Update user typescript
 export const update_account = (
+    enterprice,
+    photo,
+    city,
     address_line_1,
     address_line_2,
-    city,
-    state_province_region,
+    district,
     zipcode,
-    phone,
-    country_region
+    phone
 ) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -58,13 +59,14 @@ export const update_account = (
         };
 
         const body = JSON.stringify({
+            enterprice,
+            photo,
+            city,
             address_line_1,
             address_line_2,
-            city,
-            state_province_region,
+            district,
             zipcode,
-            phone,
-            country_region
+            phone
         });
 
         try {
@@ -82,7 +84,7 @@ export const update_account = (
                 });
                 dispatch(setAlert('Failed to update profile', 'red'));
             }
-        } catch(err) {
+        } catch (err) {
             dispatch({
                 type: UPDATE_ACCOUNT_FAIL
             });

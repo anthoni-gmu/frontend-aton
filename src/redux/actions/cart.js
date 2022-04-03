@@ -21,7 +21,7 @@ import {
 import { getStoreLocal, setStoreLocal } from "../../helpers/helpRedux";
 import { setAlert } from './alert';
 
-export const add_item = product => async dispatch => {
+export const add_item = id => async dispatch => {
     if (getStoreLocal('access')) {
         const config = {
             headers: {
@@ -31,9 +31,8 @@ export const add_item = product => async dispatch => {
             }
         };
 
-        const product_id = product.id;
+        const product_id = id;
         const body = JSON.stringify({ product_id });
-
 
         try {
             const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cart/add-item`, body, config);

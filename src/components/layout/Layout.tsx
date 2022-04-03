@@ -14,13 +14,13 @@ import {
 } from '../../redux/actions/cart';
 
 import { get_account } from '../../redux/actions/profile';
+import { get_wishlist_items } from '../../redux/actions/wishlist';
 
 
 const Layout: React.FC<Props> = ({ title, content, children }) => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated)
   const items = useSelector((state: any) => state.Cart.items)
-  console.log(isAuthenticated);
   
   useEffect(() => {
     if (dispatch && dispatch !== null && dispatch !== undefined) {
@@ -36,6 +36,8 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
         }
       }
       dispatch(get_items());
+      dispatch(get_wishlist_items());
+
 
     }
 

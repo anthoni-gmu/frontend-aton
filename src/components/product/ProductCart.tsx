@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IProduct } from '../../../types/interface'
 import { setAlert } from '../../redux/actions/alert';
 import { add_item } from '../../redux/actions/cart';
-import { ShoppingCartIcon } from '@heroicons/react/outline';
+import { HeartIcon, ShoppingCartIcon, XIcon } from '@heroicons/react/outline';
 import ModalAddProduct from '../cart/ModalAddProduct';
 import { useRouter } from 'next/router';
+import { add_wishlist_item, remove_wishlist_item } from '../../redux/actions/wishlist';
+import WishlistHeart from './WishlistHeart';
 const ProductCart: FunctionComponent<{
     product: IProduct;
 }> = ({
@@ -30,8 +32,10 @@ const ProductCart: FunctionComponent<{
         const items = useSelector((state: any) => state.Cart.items)
         const total_items = useSelector((state: any) => state.Cart.total_items)
         const products = useSelector((state: any) => state.Product.products)
+        const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated)
+        const wishlist = useSelector((state: any) => state.Wishlist.items)
 
-        const router=useRouter()
+        const router = useRouter()
         let [isOpen, setIsOpen] = useState(false)
         function closeModal() {
             setIsOpen(false)
@@ -39,9 +43,9 @@ const ProductCart: FunctionComponent<{
         function openModal() {
             setIsOpen(true)
         }
-        console.log(router.pathname)
-        console.log(photo)
+
         const addToCart = async () => {
+
             if (quantity > 0) {
                 setLoading(true)
                 const productAdd = products && products !== null && products !== undefined && products.find((element: any) => element.id === id)
@@ -56,7 +60,7 @@ const ProductCart: FunctionComponent<{
                             dispatch(setAlert('Producto actualizado', 'green')) :
                             dispatch(setAlert('No hay stock', 'red'))
 
-                dispatch(add_item(productAdd));
+                dispatch(add_item(id));
 
                 setLoading(false)
 
@@ -66,19 +70,74 @@ const ProductCart: FunctionComponent<{
             }
         }
 
+
+        const addToWishlist = async () => {
+            if (isAuthenticated) {
+                let isPresent = false;
+                if (
+                    wishlist &&
+                    wishlist !== null &&
+                    wishlist !== undefined
+
+                ) {
+                    wishlist.map((item: any) => {
+                        if (item.product.id.toString() === id.toString()) {
+                            isPresent = true;
+                        }
+                    });
+                }
+
+                if (isPresent) {
+                    dispatch(remove_wishlist_item(id));
+                    dispatch(setAlert('Se elimino el producto de la lista de deseos', 'yellow'))
+                } else {
+
+                    dispatch(add_wishlist_item(id));
+                    dispatch(setAlert('Se agrego el producto a la lista de deseos', 'green'))
+
+                }
+
+                isPresent = false;
+
+            }
+        };
+
         const WhisList = (
-            <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4  gap-2' >
-                    <div className="max-w-xs rounded-md shadow-md dark:bg-coolGray-900 dark:text-coolGray-100 m-3">
-                        <img src="https://source.unsplash.com/random/300x300/?2" alt="" className="object-cover object-center w-full rounded-t-md h-72 dark:bg-coolGray-500" />
-                        <div className="flex flex-col justify-between p-6 space-y-8">
-                            <div className="space-y-2">
-                                <h2 className="text-3xl font-semibold tracking-wide">Donec lectus leo</h2>
-                                <p className="dark:text-coolGray-100">Curabitur luctus erat nunc, sed ullamcorper erat vestibulum eget.</p>
-                            </div>
-                            <button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-400 dark:text-coolGray-900">Read more</button>
+            <div className="max-w-xs rounded-md shadow-md dark:bg-coolGray-900 dark:text-coolGray-100 m-3">
+                <button onClick={addToWishlist} className="absolute z-20 mx-3 mt-3  flex text-white bg-red-700 border-0 w-8 h-8 items-center justify-center focus:outline-none hover:bg-red-400 rounded-full">
+                    <XIcon className=' w-6 h-6' />
+                </button>
+                <Image
+                    className="object-cover object-center w-full rounded-t-md h-72 dark:bg-coolGray-500"
+                    src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${photo}`}
+                    layout="responsive"
+                    height="300"
+                    width="300"
+                    alt={slug}
+                />
+
+
+                <div className="flex flex-col justify-between p-6 space-y-8">
+
+                    <div className="space-y-2">
+                        <Link href={{
+                            pathname: '/product/[slug]',
+                            query: { slug: slug },
+                        }}>
+                            <p className="text-3xl font-semibold tracking-wide">{title.substring(0, 10) + "..."}</p>
+                        </Link>
+                        <div className='flex '>
+                            <p className="text-md text-gray-800 mt-0 mx-2 line-through">S/{compare_price}</p>
+                            <p className="text-lg font-semibold text-gray-800 mt-0 mx-2">S/{price}</p>
                         </div>
                     </div>
+
+                    {loading ? <button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-indigo-400 dark:text-coolGray-900 hover:bg-indigo-600">Añadir al carrito</button> :
+                        <button onClick={addToCart} type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-indigo-400 dark:text-coolGray-900 hover:bg-indigo-600">Añadir al carrito</button>
+                    }
+
                 </div>
+            </div>
         )
         const productList = (
             <div key={id} className="relative max-w-sm  bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer">
@@ -116,22 +175,24 @@ const ProductCart: FunctionComponent<{
                         </div>
 
                     </div>
-                    <div className="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:opacity-70" fill="none" viewBox="0 0 24 24" stroke="gray">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </div>
+                    <WishlistHeart
+                        id={id}
+                        wishlist={wishlist}
+                        addToWishlist={addToWishlist}
+                    />
                 </div>
-                <ModalAddProduct isOpen={isOpen} closeModal={closeModal} photo={photo} title={title} price={price} total_items={total_items} amount={amount} />
+
 
             </div>
         )
+
         return (
-            <>
+            <div>
                 {
-                    productList
+                    router.pathname === "/dashboard/wishlist" ? WhisList : productList
                 }
-            </>
+                <ModalAddProduct isOpen={isOpen} closeModal={closeModal} photo={photo} title={title} price={price} total_items={total_items} amount={amount} />
+            </div>
         )
     }
 

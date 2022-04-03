@@ -79,7 +79,9 @@ const Home: NextPage = () => {
               products !== null &&
               products !== undefined &&
               products.map((product: any) => (
+                <div key={product.id}>
                 <ProductCart product={product}/>
+                </div>
               ))}
           </div>
 
