@@ -21,6 +21,7 @@ import DropAuth from '../auth/DropAuth'
 import CartNav from './CartNav'
 import MovileNav from './MovileNav'
 import CartDropNav from './CartDropNav'
+import Themes from './Themes'
 
 const solutions = [
   {
@@ -94,26 +95,45 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50">
-      <Popover className="relative bg-black">
+      <Popover className="relative dark:bg-dark-200 bg-day-600">
         <div className="absolute inset-0 shadow z-30 pointer-events-none" aria-hidden="true" />
         <div className="relative z-20">
           <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10">
             <div>
-              <Link href="/">
-                <a className="flex">
-                  <span className="sr-only">Workflow</span>
-                  <Image
-                    className="h-8 w-auto sm:h-10"
-                    src={"/assets/cropped-logo-1.jpg"}
-                    height="45px"
-                    width="128px"
-                    layout="intrinsic"
-                    alt='logo aton'
-                    quality={100}
-                  />
-                </a>
-              </Link>
+              <div className="dark:hidden  flex-shrink-0 flex items-center ">
+                <Link href={'/'}>
+                  <a >
+                    <Image
+                      className="h-8 w-auto sm:h-10"
+                      src={"/assets/lightLogo.png"}
+                      height="45px"
+                      width="128px"
+                      layout="intrinsic"
+                      alt='logo aton'
+                      quality={100}
+                    />
+                  </a>
+
+                </Link>
+              </div>
+              <div className="hidden   dark:flex flex-shrink-0  items-center">
+                <Link href={'/'}>
+                  <a >
+                    <Image
+                      className="h-8 w-auto sm:h-10"
+                      src={"/assets/darkLogo.png"}
+                      height="45px"
+                      width="128px"
+                      layout="intrinsic"
+                      alt='logo aton'
+                      quality={100}
+                    />
+                  </a>
+                </Link>
+              </div>
             </div>
+
+
             <div className="-mr-2 -my-2 md:hidden  ">
               <Popover.Button className=" mx-3 bg-dark-700 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-indigo-500 hover:bg-dark-100 focus:outline-none ">
                 <span className="sr-only">Open menu</span>
@@ -202,6 +222,8 @@ const Navbar = () => {
 
               </Popover.Group>
               <div className="flex">
+                <Themes />
+
                 <CartDropNav />
                 {isAuthenticated ? <DropAuth /> : guestLinks()}
               </div>

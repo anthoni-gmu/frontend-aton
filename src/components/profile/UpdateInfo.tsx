@@ -72,12 +72,14 @@ const UpdateInfo: FunctionComponent<{
             window.scrollTo(0, 0);
         };
 
+        const table = "bg-gray-50 dark:bg-dark-700 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 my-2 rounded-xl hover:dark:bg-dark-500 hover:bg-day-300"
+
 
         return (
             <form onSubmit={e => onSubmit(e)} className="">
 
-                <div className="bg-white dark:bg-dark-100 max-w-screen-2xl shadow overflow-hidden sm:rounded-lg">
-                    <div className="p-4 bg-gray-100 border-t-4 border-indigo-400 dark:border-gray-400 rounded-lg bg-opacity-5">
+                <div className="bg-day-200 dark:bg-dark-100 max-w-screen-2xl overflow-hidden sm:rounded-lg">
+                    <div className="p-4 bg-day-100 dark:bg-dark-200   rounded-lg  lg:flex lg:justify-between ">
                         <div className="max-w-lg mx-auto md:w-full md:mx-0">
                             <div className="inline-flex items-center space-x-4">
                                 <div className="block relative">
@@ -95,19 +97,23 @@ const UpdateInfo: FunctionComponent<{
                                 </h1>
                             </div>
                         </div>
+                        <div className="w-full px-4 pb-4 mt-3 ml-auto text-gray-500 md:w-1/5">
+                            <button type="submit" className="py-2 max-w-xs  px-4 flex justify-center items-center  space-x-2 bg-indigo-600 hover:bg-indigo-700   text-white w-full  text-base font-semibold shadow-md  rounded-lg">
+                                <SaveIcon className="w-6 h-6" /> <span>Guardar</span>
+                            </button>
+                        </div>
                     </div>
-                    <div className="border-t-4 border-gray-200 dark:border-gray-400">
+                    <div className="">
                         <dl>
-
-                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                            <div className={table}>
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100 flex items-center ">
                                     Dirección 1
                                 </dt>
                                 <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
                                         name='address_line_1_form'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-dark-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
                                         value={address_line_1_form}
                                         placeholder={address_line_1}
@@ -115,30 +121,30 @@ const UpdateInfo: FunctionComponent<{
                                 </dd>
 
                             </div>
-                            <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                            <div className={table}>
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100 flex items-center">
                                     Dirección 2
                                 </dt>
                                 <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
                                         name='address_line_2_form'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-gray-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-dark-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
                                         value={address_line_2_form}
                                         placeholder={address_line_2}
                                     />
                                 </dd>
                             </div>
-                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                            <div className={table}>
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100 flex items-center">
                                     Distrito
                                 </dt>
                                 <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
                                         name='district_form'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-dark-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
                                         value={district_form}
                                         placeholder={district}
@@ -146,30 +152,30 @@ const UpdateInfo: FunctionComponent<{
                                 </dd>
 
                             </div>
-                            <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                            <div className={table}>
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100 flex items-center">
                                     Número Postal
                                 </dt>
                                 <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
                                         name='zipcode_form'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-gray-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-dark-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
                                         value={zipcode_form}
                                         placeholder={zipcode}
                                     />
                                 </dd>
                             </div>
-                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                            <div className={table}>
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100 flex items-center">
                                     Teléfono
                                 </dt>
                                 <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
                                         name='phone_form'
-                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        className="rounded-lg border-transparent flex-1 appearance-none border  w-full py-2 px-4 bg-white dark:bg-dark-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
                                         value={phone_form}
                                         placeholder={phone}
@@ -179,36 +185,36 @@ const UpdateInfo: FunctionComponent<{
                             </div>
 
 
-                            <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                            <div className={table}>
+                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100 flex items-center">
                                     Provincia
                                 </dt>
 
                                 <select
-                                    className="block w-52 text-gray-700 dark:text-gray-100 py-2 px-3 border text-lg border-gray-300 bg-white dark:bg-gray-500 rounded-md shadow-sm "
+                                    className="block w-52 text-gray-700 dark:text-gray-100 py-2 px-3 border text-lg border-gray-300 bg-white dark:bg-dark-500 rounded-md shadow-sm "
                                     id='city_form'
                                     name='city_form'
                                     onChange={(e: any) => onChange(e)}
                                 >
-                                    <option className='bg-white dark:bg-slate-500 ' value={city_form}>{city}
+                                    <option className='bg-white dark:bg-dark-500' value={city_form}>{city}
                                     </option>
                                     {
                                         cities && cities.map((country, index) => (
-                                            <option className='dark:bg-slate-500 ' key={index} value={country.name}>{country.name}</option>
+                                            <option className='dark:bg-dark-500 ' key={index} value={country.name}>{country.name}</option>
                                         ))
                                     }
                                 </select>
 
                             </div>
-                            <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">
+                            <div className={table}>
+                                <dt className="text-lg font-medium text-gray-500  dark:text-gray-100 flex items-center">
                                     Empresa
                                 </dt>
-                                <dd className="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd className="mt-1 text-lg text-gray-900  sm:mt-0 sm:col-span-2">
                                     <input
                                         type="text"
                                         name='enterprise_form'
-                                        className="rounded-lg border-transparent flex-1 uppercase appearance-none border  w-full py-2 px-4 bg-white dark:bg-slate-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
+                                        className="rounded-lg border-transparent flex-1 uppercase appearance-none border  w-full py-2 px-4 bg-white dark:bg-dark-500 text-gray-700 dark:text-gray-200 placeholder-gray-400 shadow-sm text-lg focus:outline-none  focus:border-transparent"
                                         onChange={e => onChange(e)}
                                         value={enterprise_form}
                                         placeholder={enterprise}
@@ -218,15 +224,7 @@ const UpdateInfo: FunctionComponent<{
                             </div>
                         </dl>
                     </div>
-                    <div className="w-full px-4 pb-4 mt-3 ml-auto text-gray-500 md:w-1/5">
-                        {loading ?
-                            <button className="py-2 px-4  bg-red-600 hover:bg-red-700  text-white w-full  text-center text-base font-semibold shadow-md   rounded-lg ">
-                                xd
-                            </button> :
-                            <button type="submit" className="py-2 px-4 flex  space-x-2 justify-center bg-indigo-600 hover:bg-indigo-700   text-white w-full  text-center text-base font-semibold shadow-md  rounded-lg ">
-                                <SaveIcon className="w-6 h-6" /> <span>Guardar</span>
-                            </button>}
-                    </div>
+
                 </div>
             </form>
         )

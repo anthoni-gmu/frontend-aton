@@ -24,9 +24,11 @@ const ProfileInfo: FunctionComponent<{
     },
     ViewInfo
 }) => {
+
+        const table = "bg-gray-50 dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 my-2 rounded-xl hover:dark:bg-dark-700 hover:bg-day-300"
         return (
-            <div className="bg-white dark:bg-dark-100 shadow overflow-hidden rounded-lg my-4">
-                <div className="p-4 bg-gray-100 border-t-4 border-indigo-400 dark:border-gray-400 rounded-lg bg-opacity-5 lg:flex lg:justify-between ">
+            <div className="bg-day-200 dark:bg-dark-100 overflow-hidden rounded-lg my-4">
+                <div className="p-4 bg-day-100 dark:bg-dark-200  rounded-lg lg:flex lg:justify-between ">
                     <div className="max-w-lg mx-auto md:w-full md:mx-0">
                         <div className="inline-flex items-center space-x-4">
                             <div className="block relative">
@@ -50,34 +52,34 @@ const ProfileInfo: FunctionComponent<{
                         </button>
                     </div>
                 </div>
-                <div className="border-t-4 border-indigo-200 dark:border-gray-400">
+                <div className=" ">
                     <dl>
-                        <div className="bg-gray-50 dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className={table}>
                             <dt className="text-lg font-medium text-gray-500 dark:text-gray-100">Dirección 1</dt>
                             <dd className="mt-1 text-lg text-gray-900 sm:mt-0 dark:text-gray-100 sm:col-span-2">{address_line_1}</dd>
                         </div>
-                        <div className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className={table}>
                             <dt className="text-lg dark:text-gray-100 font-medium text-gray-500">Dirección 2</dt>
                             <dd className="mt-1 text-lg dark:text-gray-100 text-gray-900 sm:mt-0 sm:col-span-2">{address_line_2}</dd>
                         </div>
-                        <div className="bg-gray-50 dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className={table}>
                             <dt className="text-lg dark:text-gray-100 font-medium text-gray-500 capitalize">Distrito</dt>
                             <dd className="mt-1 text-lg dark:text-gray-100 text-gray-900 sm:mt-0 sm:col-span-2">{district}</dd>
                         </div>
 
-                        <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className={table}>
                             <dt className="text-lg font-medium dark:text-gray-100 text-gray-500">Número Postal</dt>
                             <dd className="mt-1 text-lg dark:text-gray-100  text-gray-900 sm:mt-0 sm:col-span-2">{zipcode}</dd>
                         </div>
-                        <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className={table}>
                             <dt className="text-lg font-medium dark:text-gray-100 text-gray-500"> Teléfono</dt>
                             <dd className="mt-1 text-lg dark:text-gray-100 text-gray-900 sm:mt-0 sm:col-span-2">{phone}</dd>
                         </div>
-                        <div className="bg-gray-50 dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className={table}>
                             <dt className="text-lg font-medium dark:text-gray-100 text-gray-500">Ciudad</dt>
                             <dd className="mt-1 text-lg dark:text-gray-100  text-gray-900 sm:mt-0 sm:col-span-2">{city}</dd>
                         </div>
-                        <div className="bg-white dark:bg-dark-500 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <div className={table}>
                             <dt className="text-lg font-medium dark:text-gray-100 text-gray-500"> Empresa</dt>
                             <dd className="mt-1 text-lg dark:text-gray-100 text-gray-900 sm:mt-0 sm:col-span-2 uppercase">{enterprise}</dd>
                         </div>

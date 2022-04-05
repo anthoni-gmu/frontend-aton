@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import Head from "next/head";
 
 import Alert from "../notification/Alert";
@@ -21,8 +21,6 @@ import {
     MenuIcon
 } from '@heroicons/react/solid'
 import DropAuth from '../auth/DropAuth';
-import CartNav from '../navigation/CartNav';
-import MovileNav from '../navigation/MovileNav';
 import CartDropNav from '../navigation/CartDropNav';
 
 const Layout: React.FC<Props> = ({ title, content, children }) => {
@@ -58,8 +56,8 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
             </Head>
 
             <SidebarDashboard />
-            <div className="md:pl-64 flex flex-col flex-1 min-h-screen">
-                <div className="sticky top-0 z-10 flex-shrink-0 flex h-16  bg-white dark:bg-gray-800 shadow">
+            <div className="md:pl-64 flex flex-col flex-1 min-h-screen bg-day-200 dark:bg-dark-100">
+                <div className="sticky top-0 z-10 flex-shrink-0 flex h-16  bg-day-600 dark:bg-dark-200 shadow-inner  rounded-xl m-4">
                     <button
                         type="button"
                         className="px-4 border-gray-200 text-gray-500 focus:outline-none hover:text-white  md:hidden"
@@ -68,14 +66,14 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
                         <MenuIcon className='h-8 w-8' />
                         <span className="sr-only">Open sidebar</span>
                     </button>
-                    <div className=" hidden md:flex-1 md:flex md:items-center md:justify-end mr-24 mt-3 space-x-2">
+                    <div className="  flex-1 flex items-center justify-end mr-5 md:mr-24  space-x-2">
                         <CartDropNav />
                         <DropAuth />
                     </div>
 
                 </div>
 
-                <main className="flex-1 bg-slate-400 dark:bg-gray-700 ">
+                <main className="flex-1 bg-day-200  dark:bg-dark-100">
                     {children}
 
                 </main>

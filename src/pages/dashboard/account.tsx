@@ -18,7 +18,7 @@ const account = () => {
 
   return (
     <Layout title='Perfil | ATON' content='perfil de usuario de ATON'>
-      <div className="lg:m-10 m-3  ">
+      <div className="lg:m-6 m-3  ">
         <div className="max-w-2xl mx-auto mb-12 text-center">
           <span className="font-bold tracking-wider uppercase dark:text-violet-400 ">Tus datos estan seguros</span>
           <h2 className="text-4xl font-bold lg:text-3xl dark:text-indigo-500">Agrega o actualiza tu información</h2>

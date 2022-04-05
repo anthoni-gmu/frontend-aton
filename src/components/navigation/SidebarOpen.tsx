@@ -1,10 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { Fragment, FunctionComponent } from 'react'
 import { ListSidebar } from '../../helpers/data'
 import ListNavDashboard from './ListNavDashboard'
 import SidebarDashboard from './SidebarDashboard'
+import Themes from './Themes'
 
 const SidebarOpen: FunctionComponent<{
     sidebarOpen: boolean,
@@ -13,7 +15,7 @@ const SidebarOpen: FunctionComponent<{
 }> = ({ sidebarOpen, setSidebarOpen }) => {
     return (
         <Transition.Root show={sidebarOpen} as={Fragment}>
-            <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={setSidebarOpen}>
+            <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden " onClose={setSidebarOpen}>
                 <Transition.Child
                     as={Fragment}
                     enter="transition-opacity ease-linear duration-300"
@@ -34,7 +36,7 @@ const SidebarOpen: FunctionComponent<{
                     leaveFrom="translate-x-0"
                     leaveTo="-translate-x-full"
                 >
-                    <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white">
+                    <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-day-300 dark:bg-dark-500">
                         <Transition.Child
                             as={Fragment}
                             enter="ease-in-out duration-300"
@@ -55,11 +57,26 @@ const SidebarOpen: FunctionComponent<{
                                 </button>
                             </div>
                         </Transition.Child>
-                        <div className="flex-shrink-0 flex items-center px-4">
-                            <img
-                                className="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                                alt="Workflow"
+                        <div className="dark:hidden flex-shrink-0 flex items-center px-4">
+                            <Image
+                                className="h-8 w-auto sm:h-10"
+                                src={"/assets/lightLogo.png"}
+                                height="45px"
+                                width="128px"
+                                layout="intrinsic"
+                                alt='logo aton'
+                                quality={100}
+                            />
+                        </div>
+                        <div className="hidden dark:flex flex-shrink-0  items-center px-4">
+                            <Image
+                                className="h-8 w-auto sm:h-10"
+                                src={"/assets/darkLogo.png"}
+                                height="45px"
+                                width="128px"
+                                layout="intrinsic"
+                                alt='logo aton'
+                                quality={100}
                             />
                         </div>
                         <div className="mt-5 flex-1 h-0 overflow-y-auto">
@@ -73,6 +90,9 @@ const SidebarOpen: FunctionComponent<{
                                 }
 
                             </nav>
+                        </div>
+                        <div className="absolute bottom-0 my-10 mx-10">
+                            <Themes />
                         </div>
                     </div>
                 </Transition.Child>
