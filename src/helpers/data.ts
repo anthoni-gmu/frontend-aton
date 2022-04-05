@@ -1,4 +1,4 @@
-import { ClipboardIcon, HeartIcon,ShoppingBagIcon,HomeIcon,UserIcon } from '@heroicons/react/outline';
+import { ClipboardIcon, HeartIcon, ShoppingBagIcon, HomeIcon, UserIcon, ViewGridIcon, GlobeIcon, ScaleIcon } from '@heroicons/react/outline';
 import { INavbarDashboard } from "../../types/interface";
 
 export const ListSidebar: INavbarDashboard[] = [
@@ -8,3 +8,11 @@ export const ListSidebar: INavbarDashboard[] = [
     { name: 'Pedidos', to: '/dashboard/order', HeartIcon: ClipboardIcon },
     { name: 'Perfil', to: '/dashboard/account', HeartIcon: UserIcon },
 ];
+export const ListNavbar: INavbarDashboard[] = [
+    { name: 'Inicio', to: '/', HeartIcon: HomeIcon },
+    { name: 'Tienda', to: '/products', HeartIcon: ShoppingBagIcon },
+    { name: 'Categorias', to: '', HeartIcon: ViewGridIcon },
+    { name: 'Nosotros', to: '', HeartIcon: GlobeIcon },
+    { name: 'Políticas', to: '', HeartIcon: ScaleIcon },
+];
+

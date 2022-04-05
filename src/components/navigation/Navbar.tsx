@@ -1,54 +1,25 @@
 import React, { Fragment, useState } from 'react'
-import { Popover, Transition } from '@headlessui/react'
+import { Popover } from '@headlessui/react'
 
 import {
-  ChartBarIcon,
-  CheckCircleIcon,
-  CursorClickIcon,
+
   MenuIcon,
-  PhoneIcon,
-  PlayIcon,
-  ShieldCheckIcon,
-  ShoppingCartIcon,
-  ViewGridIcon,
+  SearchIcon,
+  UserAddIcon,
 } from '@heroicons/react/outline'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { LoginIcon } from '@heroicons/react/solid'
 
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux';
 import DropAuth from '../auth/DropAuth'
-import CartNav from './CartNav'
 import MovileNav from './MovileNav'
 import CartDropNav from './CartDropNav'
 import Themes from './Themes'
+import SidebarOpen from './SidebarOpen'
+import { ListNavbar } from '../../helpers/data'
+import { useRouter } from 'next/router'
 
-const solutions = [
-  {
-    name: 'Analytics',
-    description: 'Get a better understanding of where your traffic is coming from.',
-    href: '#',
-    icon: ChartBarIcon,
-  },
-  {
-    name: 'Engagement',
-    description: 'Speak directly to your customers in a more meaningful way.',
-    href: '#',
-    icon: CursorClickIcon,
-  },
-  { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
-  {
-    name: 'Integrations',
-    description: "Connect with third-party tools that you're already using.",
-    href: '#',
-    icon: ViewGridIcon,
-  },
-]
-const callsToAction = [
-  { name: 'Watch Demo', href: '#', icon: PlayIcon },
-  { name: 'View All Products', href: '#', icon: CheckCircleIcon },
-  { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-]
 
 
 
@@ -58,32 +29,30 @@ const classNames = (...classes: any) => {
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated);
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { pathname } = useRouter()
+  const noSelect = ' dark:text-gray-400  '
+  const select = 'border-b-2 border-day-600 dark:border-day-200'
 
-
-  let [isOpen, setIsOpen] = useState(false)
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  function openModal() {
-    setIsOpen(true)
-  }
   const guestLinks = () => {
     return (
 
       <Fragment>
-        <div className="flex items-center mx-2 ">
+        <div className="flex items-center  justify-end md:w-96 space-x-2 ">
           <Link href="/auth/login">
-            <a className="text-base font-medium text-white hover:text-indigo-500">
-              Ingresar
+            <a className="text-base font-medium flex space-x-1 dark:text-gray-400  hover:text-indigo-500">
+              <LoginIcon className='w-6 h-6 ' />
+              <span>Ingresar</span>
             </a>
           </Link>
           <Link href="/auth/signup">
             <a
 
-              className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              className="  inline-flex items-center justify-center space-x-1 text-base font-medium text-day-700 dark:text-day-200 "
             >
-              Registrarse
+              <UserAddIcon className='w-6 h-6 ' />
+              <span>Registrate</span>
+
             </a>
           </Link>
         </div>
@@ -94,29 +63,24 @@ const Navbar = () => {
   }
 
   return (
-    <div className="sticky top-0 z-50">
-      <Popover className="relative dark:bg-dark-200 bg-day-600">
-        <div className="absolute inset-0 shadow z-30 pointer-events-none" aria-hidden="true" />
-        <div className="relative z-20">
-          <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10">
-            <div>
-              <div className="dark:hidden  flex-shrink-0 flex items-center ">
-                <Link href={'/'}>
-                  <a >
-                    <Image
-                      className="h-8 w-auto sm:h-10"
-                      src={"/assets/lightLogo.png"}
-                      height="45px"
-                      width="128px"
-                      layout="intrinsic"
-                      alt='logo aton'
-                      quality={100}
-                    />
-                  </a>
+    <div className="sticky top-0 z-40 ">
+      <SidebarOpen sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} page={"shop"} />
 
-                </Link>
-              </div>
-              <div className="hidden   dark:flex flex-shrink-0  items-center">
+      <Popover className="relative dark:bg-dark-500 bg-day-700">
+        <div className="absolute inset-0 shadow  pointer-events-none" aria-hidden="true" />
+        <div className="relative z-20">
+          <div className="max-w-7xl mx-auto flex justify-between items-start  px-4 pt-3 pb-2 sm:px-6  lg:px-8 md:justify-start  ">
+
+            <div className="md:flex  items-center md:space-x-2 lg:space-x-56 ">
+              <div className='flex'>
+                <button
+                  type="button"
+                  className="px-4  border-gray-200 text-gray-500 focus:outline-none hover:text-white  md:hidden"
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  <MenuIcon className='h-8 w-8' />
+                  <span className="sr-only">Open sidebar</span>
+                </button>
                 <Link href={'/'}>
                   <a >
                     <Image
@@ -131,124 +95,54 @@ const Navbar = () => {
                   </a>
                 </Link>
               </div>
-            </div>
+
+              <div className="relative text-gray-600  ">
 
 
-            <div className="-mr-2 -my-2 md:hidden  ">
-              <Popover.Button className=" mx-3 bg-dark-700 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-indigo-500 hover:bg-dark-100 focus:outline-none ">
-                <span className="sr-only">Open menu</span>
-                <MenuIcon className="h-6 w-6" aria-hidden="true" />
-              </Popover.Button>
-              <button onClick={openModal} className=" mx-3 bg-dark-700 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-indigo-500 hover:bg-dark-100 focus:outline-none ">
-                <span className="sr-only">Open Cart</span>
-                <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
-
-            </div>
-            <div className="hidden md:flex-1 md:flex md:items-center md:justify-between">
-              <Popover.Group as="nav" className="flex space-x-2 lg:space-x-10">
-                <Popover>
-                  {({ open }) => (
-                    <>
-                      <Popover.Button
-                        className={classNames(
-                          open ? 'text-indigo-500' : 'text-white',
-                          'group bg-black rounded-md inline-flex items-center text-lg font-medium hover:text-indigo-500 focus:outline-none'
-                        )}
-                      >
-                        <span>Categorias</span>
-                        <ChevronDownIcon
-                          className={classNames(
-                            open ? 'text-indigo-500' : 'text-white',
-                            'ml-2 h-5 w-5 group-hover:text-indigo-500'
-                          )}
-                          aria-hidden="true"
-                        />
-                      </Popover.Button>
-
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="opacity-0 -translate-y-1"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 -translate-y-1"
-                      >
-                        <Popover.Panel className="hidden md:block absolute z-10 top-full inset-x-0 transform shadow-lg bg-dark-700">
-                          <div className="max-w-7xl mx-auto grid gap-y-6 px-4 py-6 sm:grid-cols-2 sm:gap-8 sm:px-6 sm:py-8 lg:grid-cols-4 lg:px-8 lg:py-12 xl:py-16">
-                            {solutions.map((item) => (
-                              <a
-                                key={item.name}
-                                href={item.href}
-                                className="-m-3 p-3 flex flex-col justify-between rounded-lg hover:bg-indigo-300 hover:text-dark text-white"
-                              >
-                                <div className="flex md:h-full lg:flex-col">
-                                  <div className="flex-shrink-0">
-                                    <span className="inline-flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
-                                      <item.icon className="h-6 w-6" aria-hidden="true" />
-                                    </span>
-                                  </div>
-                                  <div className="ml-4 md:flex-1 md:flex md:flex-col md:justify-between lg:ml-0 lg:mt-4">
-                                    <div>
-                                      <p className="text-base font-medium ">{item.name}</p>
-                                      <p className="mt-1 text-sm text-gray-500">{item.description}</p>
-                                    </div>
-
-                                  </div>
-                                </div>
-                              </a>
-                            ))}
-                          </div>
-
-                        </Popover.Panel>
-                      </Transition>
-                    </>
-                  )}
-                </Popover>
-
-
-
-
-                <Link href="/products">
-                  <a className="text-lg font-medium text-white hover:text-indigo-500">
-                    Productos
-                  </a>
-                </Link>
-
-                <a href="#" className="text-lg font-medium text-white hover:text-indigo-500">
-                  Nosotros
-                </a>
-
-              </Popover.Group>
-              <div className="flex">
-                <Themes />
-
-                <CartDropNav />
-                {isAuthenticated ? <DropAuth /> : guestLinks()}
+                <input type="search" name="serch" placeholder="Search" className="bg-white   h-10 px-5 md:w-96  w-52 rounded-lg text-sm focus:outline-none" />
+                <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
+                  <SearchIcon className='h-6 w-6' />
+                </button>
               </div>
+
+
             </div>
+
+
+            <div className="  flex items-start justify-start sm:justify-end md:w-48 lg:w-60">
+              <CartDropNav />
+              {isAuthenticated ? <DropAuth /> : <div className='w-10'></div>}
+            </div>
+
+
+
           </div>
         </div>
-        <CartNav closeModal={closeModal} isOpen={isOpen} />
-        <MovileNav />
 
       </Popover>
-      <div className="bg-gray-50">
-        <div className="max-w-7xl mx-auto space-y-6 px-4 py-5 sm:flex sm:space-y-0 sm:space-x-10 sm:px-6 lg:px-8">
-          {callsToAction.map((item) => (
-            <div key={item.name} className="flow-root">
-              <a
-                href={item.href}
-                className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100"
-              >
-                <item.icon className="flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
-                <span className="ml-3">{item.name}</span>
-              </a>
+
+      <div className="bg-day-200 dark:bg-dark-200 overflow-x-auto hidden md:block">
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:flex sm:space-y-0 sm:space-x-10 sm:px-6 lg:px-8">
+          {ListNavbar.map((item) => (
+            <div key={item.name} className={` flow-root hover:border-b-2 border-b-2 border-transparent pb-1 dark:hover:text-day-200 hover:text-day-600 hover:border-day-600 dark:hover:border-day-200${pathname === item.to ? select : noSelect}`} >
+              <Link href={item.to}>
+                <a className={`-m-3 p-3  flex items-center rounded-md text-base font-medium  `} >
+                  <item.HeartIcon className="flex-shrink-0 h-6 w-6 " aria-hidden="true" />
+                  <span className="ml-3">{item.name}</span>
+                </a>
+              </Link>
             </div>
           ))}
+          {!isAuthenticated && guestLinks()}
+          <Themes />
+
         </div>
       </div>
+      {!isAuthenticated && <div className="bg-day-400 dark:bg-dark-200 md:hidden ">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex">
+          {guestLinks()}
+        </div>
+      </div>}
     </div>
   )
 }

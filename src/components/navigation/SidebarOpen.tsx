@@ -3,7 +3,8 @@ import { XIcon } from '@heroicons/react/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { Fragment, FunctionComponent } from 'react'
-import { ListSidebar } from '../../helpers/data'
+import { INavbarDashboard } from '../../../types/interface'
+import { ListSidebar,ListNavbar } from '../../helpers/data'
 import ListNavDashboard from './ListNavDashboard'
 import SidebarDashboard from './SidebarDashboard'
 import Themes from './Themes'
@@ -11,8 +12,21 @@ import Themes from './Themes'
 const SidebarOpen: FunctionComponent<{
     sidebarOpen: boolean,
     setSidebarOpen: (id: boolean) => void,
+    page:string
 
-}> = ({ sidebarOpen, setSidebarOpen }) => {
+}> = ({ sidebarOpen, setSidebarOpen ,page}) => {
+    let items:any=[]
+
+    if(page==="dashboard"){
+        items=ListSidebar
+    }else if(page==="shop"){
+        items=ListNavbar
+
+    }else{
+        items=ListSidebar
+
+    }
+
     return (
         <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden " onClose={setSidebarOpen}>
@@ -82,7 +96,7 @@ const SidebarOpen: FunctionComponent<{
                         <div className="mt-5 flex-1 h-0 overflow-y-auto">
                             <nav className="mt-10 px-6 ">
                                 {
-                                    ListSidebar.map(item => (
+                                    items.map((item:any) => (
                                         <div key={item.name}>
                                             <ListNavDashboard list={item} />
                                         </div>

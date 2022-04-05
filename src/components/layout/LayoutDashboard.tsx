@@ -79,7 +79,7 @@ const Layout: React.FC<Props> = ({ title, content, children }) => {
                 </main>
             </div>
             <Alert />
-            <SidebarOpen sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <SidebarOpen sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} page={"dashboard"} />
 
         </>
     )

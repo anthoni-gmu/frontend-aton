@@ -27,7 +27,7 @@ const DropAuth = () => {
 
     return (
         <div className="block">
-            <div className="ml-4 flex items-center md:ml-6">
+            <div className=" flex items-center ">
 
 
                 {

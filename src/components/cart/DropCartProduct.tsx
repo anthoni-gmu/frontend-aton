@@ -27,11 +27,12 @@ const DropCartProduct: FunctionComponent<{
         return (
             <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
                 <div className="flex w-full space-x-2 sm:space-x-4">
-                    <div>
+                    <div className='w-28 '>
                         <Image
                             className="flex-shrink-0 object-cover w-20 h-20 dark:border-transparent rounded outline-none sm:w-32 sm:h-32 dark:bg-coolGray-500"
                             src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${product.photo}`}
                             alt={product.slug}
+                            layout={"intrinsic"}
                             width={500}
                             height={300}
                             priority
@@ -43,7 +44,7 @@ const DropCartProduct: FunctionComponent<{
                         <div className="flex justify-between w-full pb-2 space-x-2">
                             <div className="space-y-1">
                                 <h3 className="text-lg font-semibold leading-snug sm:pr-8">{product.title.substring(0, 11) + "..."}</h3>
-                                <p className="text-sm dark:text-coolGray-400 lowercase">{product.get_category}</p>
+                                <p className="text-sm dark:text-coolGray-400 lowercase hidden md:block">{product.get_category}</p>
                             </div>
                             <div className="text-right">
                                 <p className="text-lg font-semibold">S/{parseFloat(product.price) * count}</p>
