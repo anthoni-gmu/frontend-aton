@@ -1,4 +1,4 @@
-import { HeartIcon } from '@heroicons/react/outline';
+import { HeartIcon } from '@heroicons/react/solid';
 import React, { FunctionComponent } from 'react'
 
 const WishlistHeart: FunctionComponent<{
@@ -29,7 +29,7 @@ const WishlistHeart: FunctionComponent<{
             )
         } else {
             return (
-                <button onClick={addToWishlist} className="flex flex-col-reverse mb-1 mr-4 group cursor-pointer" >
+                <button onClick={addToWishlist} className="flex flex-col-reverse  mb-1 mr-4 group cursor-pointer" >
                     <HeartIcon className='h-6 w-6 group-hover:opacity-70' />
                 </button>
             )

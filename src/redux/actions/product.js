@@ -4,7 +4,11 @@ import {
     PRODUCTS_OK,
     PRODUCTS_FAIL,
     PRODUCT_OK,
-    PRODUCT_FAIL
+    PRODUCT_FAIL,
+    CATEGORIES_OK,
+    CATEGORIES_OK_FAIL,
+    BRANDS_OK,
+    BRANDS_OK_FAIL
 } from './types';
 
 import axios from "axios";
@@ -128,3 +132,59 @@ export const product_detail = (slug) => async dispatch => {
 
 }
 
+export const get_categories = () => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/categories`, config);
+
+        if (res.status === 200) {
+            dispatch({
+                type: CATEGORIES_OK,
+                payload: res.data
+            });
+
+        } else {
+            dispatch({
+                type: CATEGORIES_OK_FAIL
+            });
+        }
+
+    } catch (err) {
+        dispatch({
+            type: CATEGORIES_OK_FAIL
+        });
+
+    }
+}
+export const get_brands= () => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/product/brands`, config);
+
+        if (res.status === 200) {
+            dispatch({
+                type: BRANDS_OK,
+                payload: res.data
+            });
+
+        } else {
+            dispatch({
+                type: BRANDS_OK_FAIL
+            });
+        }
+
+    } catch (err) {
+        dispatch({
+            type: BRANDS_OK_FAIL
+        });
+
+    }
+}

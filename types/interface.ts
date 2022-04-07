@@ -39,6 +39,7 @@ export interface ICartItem {
     count: number,
     product: IProduct
 }
+
 export interface INavbarDashboard {
     name: string,
     to: string,

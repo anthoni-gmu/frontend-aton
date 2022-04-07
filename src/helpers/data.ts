@@ -11,7 +11,7 @@ export const ListSidebar: INavbarDashboard[] = [
 export const ListNavbar: INavbarDashboard[] = [
     { name: 'Inicio', to: '/', HeartIcon: HomeIcon },
     { name: 'Tienda', to: '/products', HeartIcon: ShoppingBagIcon },
-    { name: 'Categorias', to: '', HeartIcon: ViewGridIcon },
+    { name: 'Categorias', to: '/category/categories', HeartIcon: ViewGridIcon },
     { name: 'Nosotros', to: '', HeartIcon: GlobeIcon },
     { name: 'Políticas', to: '', HeartIcon: ScaleIcon },
 ];

@@ -4,3 +4,6 @@
 
 
 
+.borderNavHome {
+    @apply border-b-8  border-red-600;
+}

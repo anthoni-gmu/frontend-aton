@@ -140,7 +140,8 @@ const ProductCart: FunctionComponent<{
             </div>
         )
         const productList = (
-            <div key={id} className="relative max-w-sm  bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer">
+            <div key={id}
+                className="relative max-w-sm  bg-white dark:bg-dark-300 shadow-sm rounded-md p-2 mx-3 my-3 cursor-pointer">
                 <div className="overflow-x-hidden rounded-2xl relative">
                     <Image
                         className=" rounded-2xl w-full object-cover"
@@ -150,15 +151,7 @@ const ProductCart: FunctionComponent<{
                         width="300"
                         alt={slug}
                     />
-                    <p className="absolute right-2 top-2 bg-indigo-300 rounded-full p-2 cursor-pointer group">
-                        {loading ? <button
-                            className="flex ml-auto text-white bg-indigo-500 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-indigo-700 rounded-full">
-                            xd
-                        </button> :
-                            <button onClick={addToCart} className="flex ml-auto text-white bg-indigo-500 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-indigo-700 rounded-full">
-                                <ShoppingCartIcon className='w-6 h-6' />
-                            </button>}
-                    </p>
+
                 </div>
                 <div className="mt-4 pl-2 mb-2 flex justify-between ">
                     <div>
@@ -166,13 +159,15 @@ const ProductCart: FunctionComponent<{
                             pathname: '/product/[slug]',
                             query: { slug: slug },
                         }}>
-                            <p className="text-lg font-semibold text-gray-900 mb-0">{title}</p>
+                            <p className="text-lg font-semibold text-dark-700 dark:text-day-100 mb-0">{title}</p>
                         </Link>
 
-                        <div className='flex '>
-                            <p className="text-md text-gray-800 mt-0 mx-2 line-through">S/{compare_price}</p>
-                            <p className="text-lg font-semibold text-gray-800 mt-0 mx-2">S/{price}</p>
+                        <div className='flex justify-around my-2'>
+                            <p className="text-lg font-bold text-day-700 mt-0 mx-2 dark:text-day-200">S/{price}</p>
+
+                            <p className="text-md font-semibold text-red-500 mt-0 mx-2 line-through ">S/{compare_price}</p>
                         </div>
+
 
                     </div>
                     <WishlistHeart
@@ -180,6 +175,16 @@ const ProductCart: FunctionComponent<{
                         wishlist={wishlist}
                         addToWishlist={addToWishlist}
                     />
+                </div>
+                <div>
+                    {loading ? <button
+                        className="flex ml-auto text-white bg-indigo-500 border-0 w-10 h-10 items-center justify-center focus:outline-none hover:bg-indigo-700 rounded-full">
+                        xd
+                    </button> :
+                        <button onClick={addToCart} className="flex ml-auto  text-day-600 bg-day-100 border-2 border-day-700 hover:bg-day-600 hover:text-day-100      dark:text-day-100 dark:bg-day-600 dark:border-2 dark:border-day-700 dark:hover:bg-dark-100 dark:hover:text-day-100 w-full h-10 items-center justify-around  ">
+                            <span>Agregar al carrito</span>
+                            <ShoppingCartIcon className='w-6 h-6' />
+                        </button>}
                 </div>
 
 

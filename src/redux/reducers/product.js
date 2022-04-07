@@ -4,7 +4,11 @@ import {
     PRODUCTS_OK,
     PRODUCTS_FAIL,
     PRODUCT_OK,
-    PRODUCT_FAIL
+    PRODUCT_FAIL,
+    CATEGORIES_OK,
+    CATEGORIES_OK_FAIL,
+    BRANDS_OK,
+    BRANDS_FAIL
 } from '../actions/types'
 
 const initialState = {
@@ -12,11 +16,13 @@ const initialState = {
     count: 0,
     previous: null,
     next: null,
-    characteristic:null,
-    images:null,
-    related:null,
-    colors:null,
-    product:null
+    characteristic: null,
+    images: null,
+    related: null,
+    colors: null,
+    product: null,
+    categories: null,
+    brands: null
 }
 
 export default function Product(state = initialState, action) {
@@ -31,20 +37,20 @@ export default function Product(state = initialState, action) {
         case PRODUCT_OK:
             return {
                 ...state,
-                characteristic:payload.characteristic,
-                images:payload.images,
-                related:payload.related,
-                colors:payload.colors,
-                product:payload.product
+                characteristic: payload.characteristic,
+                images: payload.images,
+                related: payload.related,
+                colors: payload.colors,
+                product: payload.product
             }
         case PRODUCT_FAIL:
             return {
                 ...state,
-                characteristic:null,
-                images:null,
-                related:null,
-                colors:null,
-                product:null
+                characteristic: null,
+                images: null,
+                related: null,
+                colors: null,
+                product: null
             }
         case PRODUCTS_HOME_FAIL:
             return {
@@ -66,6 +72,28 @@ export default function Product(state = initialState, action) {
                 previous: null,
                 next: null,
                 count: 0,
+            }
+        case CATEGORIES_OK:
+            return {
+                ...state,
+                categories: payload.categories,
+            }
+        case CATEGORIES_OK_FAIL:
+            return {
+                ...state,
+                categories: null,
+
+            }
+        case BRANDS_OK:
+            return {
+                ...state,
+                brands: payload.brands,
+            }
+        case BRANDS_FAIL:
+            return {
+                ...state,
+                brands: null,
+
             }
 
         default:

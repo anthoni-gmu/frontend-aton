@@ -93,10 +93,10 @@ const products = () => {
             dispatch(get_pages_products(previous))
         window.scrollTo(0, 0);
     }
-
+    // https://dribbble.com/shots/10812791-VEAR-Fashion-e-commerce-template/attachments/2467451?mode=media
     return (
         <Layout title='Productos | Aton' content="productos de aton">
-            <div className="bg-white">
+            <div className="bg-day-300 dark:bg-dark-300">
                 <div>
                     {/* Mobile filter dialog */}
                     <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -198,7 +198,7 @@ const products = () => {
 
                     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="relative z-10 flex items-baseline justify-between pt-4 pb-6 border-b border-gray-200">
-                            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">ATON Productos</h1>
+                            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">ATON Productos</h1>
 
                             <div className="flex items-center">
                                 <Menu as="div" className="relative inline-block text-left">
@@ -259,16 +259,12 @@ const products = () => {
                             </div>
                         </div>
 
-                        <section aria-labelledby="products-heading" className="pt-6 pb-24">
-                            <h2 id="products-heading" className="sr-only">
-                                Products
-                            </h2>
-
-                            <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
+                        <section  className="pt-6 pb-24 dark:bg-dark-200 ">
+                            <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10 mx-4 ">
                                 {/* Filters */}
                                 <form className="hidden lg:block">
                                     <h3 className="sr-only">Categories</h3>
-                                    <ul role="list" className="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200">
+                                    <ul role="list" className="text-sm font-medium dark:text-white text-gray-900 space-y-4 pb-6 border-b border-gray-200">
                                         {subCategories.map((category) => (
                                             <li key={category.name}>
                                                 <a href={category.href}>{category.name}</a>
@@ -321,9 +317,9 @@ const products = () => {
                                 </form>
 
                                 {/* Product grid */}
-                                <div className="lg:col-span-3">
+                                <div className="lg:col-span-3 bg-day-100 dark:bg-dark-100">
                                     {/* Replace with your content */}
-                                    <div className="border-4 border-dashed border-gray-200 rounded-lg h-full" >
+                                    <div className="rounded-lg h-full" >
                                         <div className="m-3 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                                             {products_query &&
                                                 products_query !== null &&

@@ -42,6 +42,16 @@ export const PRODUCTS_FAIL="PRODUCTS_FAIL"
 export const PRODUCT_OK="PRODUCT_OK"
 export const PRODUCT_FAIL="PRODUCT_FAIL"
 
+// Categories
+
+export const CATEGORIES_OK="CATEGORIES_OK"
+export const CATEGORIES_OK_FAIL="CATEGORIES_OK_FAIL"
+
+// Categories
+
+export const BRANDS_OK="BRANDS_OK"
+export const BRANDS_OK_FAIL="BRANDS_OK_FAIL"
+
 
 // Carrito Local (frontend)
 export const ADD_ITEM = 'ADD_ITEM';
