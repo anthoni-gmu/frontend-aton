@@ -1,28 +1,22 @@
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon, FilterIcon, MinusSmIcon, PlusSmIcon, SearchIcon, ShoppingCartIcon, TrashIcon, XIcon } from '@heroicons/react/outline'
-import React, { Fragment, useEffect, useState } from 'react'
-import { ChevronLeftIcon, ChevronRightIcon, ViewGridIcon } from '@heroicons/react/solid';
+import { SearchIcon, TrashIcon } from '@heroicons/react/outline'
+import React, { useEffect, useState } from 'react'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import ShopMovile from './ShopMovile';
 import ShopHead from './ShopHead';
 import { useDispatch, useSelector } from 'react-redux';
-import { get_brands, get_categories, get_pages_products, products_all } from '../../redux/actions/product';
+import { get_brands, get_categories, get_filtered_products, get_pages_products, products_all } from '../../redux/actions/product';
 import DropFilter from './DropFilter';
 import MoreFilters from './filter/MoreFilters';
 import FilterPrice from './FilterPrice';
 import ProductCart from '../product/ProductCart';
+import { FormFilter } from '../../../types/interface';
 const subCategories = [
     { name: 'Todos', href: '#' },
     { name: 'Lo Nuevo', href: '#' },
     { name: 'Más vendidos', href: '#' },
     { name: 'Más vistos', href: '#' },
 ]
-const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
-]
+
 
 const ShopComponent = () => {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
@@ -36,7 +30,6 @@ const ShopComponent = () => {
             dispatch(products_all());
             dispatch(get_brands());
         }
-
     }, [dispatch]);
 
     const categories = useSelector((state: any) => state.Product.categories)
@@ -45,6 +38,7 @@ const ShopComponent = () => {
     const next = useSelector((state: any) => state.Product.next)
     const previous = useSelector((state: any) => state.Product.previous)
     const count = useSelector((state: any) => state.Product.count)
+
     const nextPage: any = async () => {
         if (dispatch && dispatch !== null && dispatch !== undefined)
             dispatch(get_pages_products(next))
@@ -55,6 +49,34 @@ const ShopComponent = () => {
             dispatch(get_pages_products(previous))
         window.scrollTo(0, 0);
     }
+
+
+    const [formData, setFormData] = useState<FormFilter>({
+        brandsform: [],
+        categoriesform: [],
+        price_range: 'Any',
+        order: 'desc',
+        sort_by: 'created'
+
+    });
+    const onChange = (e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLSelectElement>): void => setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
+    const onSubmit = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        if (dispatch && dispatch !== null && dispatch !== undefined)
+            dispatch(get_filtered_products(formData.brandsform, formData.categoriesform, formData.order, formData.sort_by, formData.price_range));
+        setMobileFiltersOpen(false)
+    };
+    const clearForm = () => {
+        formData.brandsform = []
+        formData.categoriesform = []
+        formData.order = 'created'
+        formData.sort_by = 'desc'
+        formData.price_range = 'Any'
+
+        if (dispatch && dispatch !== null && dispatch !== undefined)
+            dispatch(products_all());
+    }
+
     return (
         <div className="bg-day-300 dark:bg-dark-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +85,7 @@ const ShopComponent = () => {
                 <section className="pt-6 pb-24 dark:bg-dark-200 ">
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10 mx-4   ">
                         <div className="hidden lg:block  relative ">
-                            <form className=''>
+                            <form onSubmit={e => onSubmit(e)}>
                                 <h3 className="sr-only">Categories</h3>
                                 <ul role="list" className="text-sm font-medium dark:text-white text-gray-900 space-y-4 pb-6 border-b border-gray-200">
                                     {subCategories.map((category) => (
@@ -75,24 +97,24 @@ const ShopComponent = () => {
                                 {
                                     categories && categories !== null && categories !== undefined && categories.map((item: any) => (
 
-                                        <DropFilter list={item.sub_categories} name={item.title} key={item.id} />
+                                        <DropFilter  list={item.sub_categories} name={item.title} key={item.id} formdata={formData.categoriesform} />
 
                                     ))
                                 }
                                 {
                                     brands && brands !== null && brands !== undefined && (
-                                        <DropFilter list={brands} name={"marcas"} />
+                                        <DropFilter list={brands} name={"marcas"} formdata={formData.brandsform} />
                                     )
                                 }
 
-                                <MoreFilters />
-                                <FilterPrice />
+                                <MoreFilters sort_by={formData.sort_by} order={formData.order} onChange={onChange} />
+                                <FilterPrice price_range={formData.price_range} onChange={onChange} />
                                 <div className='flex space-x-2'>
-                                    <button className="flex ml-auto mt-3  text-day-600 bg-day-100 border-2 border-day-700 hover:bg-day-600 hover:text-day-100      dark:text-day-100 dark:bg-dark-200 dark:border-2 dark:border-day-700 dark:hover:bg-day-600 dark:hover:text-day-100 w-full h-10 items-center justify-around  ">
+                                    <button onClick={clearForm} className="flex ml-auto mt-3  text-day-600 bg-day-100 border-2 border-day-700 hover:bg-day-600 hover:text-day-100      dark:text-day-100 dark:bg-dark-200 dark:border-2 dark:border-day-700 dark:hover:bg-day-600 dark:hover:text-day-100 w-full h-10 items-center justify-around  ">
                                         <span>Limpiar</span>
                                         <TrashIcon className='w-6 h-6' />
                                     </button>
-                                    <button className="flex ml-auto mt-3  text-day-100 bg-day-600 border-2 border-day-600 hover:bg-day-700  dark:text-day-100 dark:bg-day-600 dark:border-2 dark:border-day-700 dark:hover:bg-day-700 dark:hover:text-day-100 w-full h-10 items-center justify-around  ">
+                                    <button type="submit" className="flex ml-auto mt-3  text-day-100 bg-day-600 border-2 border-day-600 hover:bg-day-700  dark:text-day-100 dark:bg-day-600 dark:border-2 dark:border-day-700 dark:hover:bg-day-700 dark:hover:text-day-100 w-full h-10 items-center justify-around  ">
                                         <span>Filtrar</span>
                                         <SearchIcon className='w-6 h-6' />
                                     </button>
@@ -143,7 +165,19 @@ const ShopComponent = () => {
                     </div>
                 </section>
             </div>
-            <ShopMovile mobileFiltersOpen={mobileFiltersOpen} setMobileFiltersOpen={setMobileFiltersOpen} />
+            <ShopMovile
+                categories={categories}
+                brands={brands}
+                mobileFiltersOpen={mobileFiltersOpen}
+                setMobileFiltersOpen={setMobileFiltersOpen}
+                onSubmit={onSubmit}
+                onChange={onChange}
+                brandsform={formData.brandsform}
+                categoriesform={formData.categoriesform}
+                price_range={formData.price_range}
+                sort_by={formData.sort_by}
+                order={formData.order}
+            />
         </div >
     )
 }

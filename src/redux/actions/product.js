@@ -188,3 +188,40 @@ export const get_brands= () => async dispatch => {
 
     }
 }
+
+
+export const get_filtered_products = ( brands,categories, order, sort_by, price_range) => async dispatch => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({
+        brands,
+        categories,
+        order,
+        sort_by,
+        price_range,
+    });
+
+    try {
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/product/filter`, body, config);
+
+        if (res.status === 200 && !res.data.error) {
+            dispatch({
+                type: PRODUCTS_OK,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: PRODUCTS_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: PRODUCTS_FAIL
+        });
+    }
+}

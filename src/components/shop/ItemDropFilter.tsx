@@ -1,30 +1,37 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 
 const ItemDropFilter: FunctionComponent<{
     option: {
         id: number,
         title: string
     }
+    formdata: number[]
+
 }> = ({
     option: {
         id,
         title
-    }
+    },
+    formdata
 }) => {
+        const i = formdata.indexOf(id);
+        let state = i !== -1 ? true : false
+       
 
-        const AddCheck = (id: any) => {
-            console.log("Chek", id)
+        const AddCheck = (id: number) => {
+
+            i !== -1 ? formdata.splice(i, 1) : formdata.push(id)
         }
         return (
             <div className=' className="flex items-center"'>
                 <input
                     id={`filter-${id}-${title}`}
                     name={`${id}`}
-                    defaultValue={"false"}
                     type="checkbox"
                     onClick={() => AddCheck(id)}
-                    defaultChecked={false}
+                    defaultChecked={state}
                     className="h-4 w-4 border-gray-300 rounded  focus:outline-none "
+                    
                 />
                 <label
                     htmlFor={`filter-${id}-${title}`}

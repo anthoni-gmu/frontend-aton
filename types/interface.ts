@@ -45,3 +45,11 @@ export interface INavbarDashboard {
     to: string,
     HeartIcon(props: React.ComponentProps<'svg'>): JSX.Element
 }
+
+export interface FormFilter  {
+    brandsform: number[];
+    categoriesform: number[];
+    order: string;
+    sort_by: string;
+    price_range: string;
+}
