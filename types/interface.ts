@@ -2,6 +2,7 @@
 export interface IProduct {
     id: number,
     get_category: string;
+    get_brand: string;
     title: string;
     price: string;
     compare_price: string;

@@ -97,7 +97,7 @@ const ShopComponent = () => {
                                 {
                                     categories && categories !== null && categories !== undefined && categories.map((item: any) => (
 
-                                        <DropFilter  list={item.sub_categories} name={item.title} key={item.id} formdata={formData.categoriesform} />
+                                        <DropFilter list={item.sub_categories} name={item.title} key={item.id} formdata={formData.categoriesform} />
 
                                     ))
                                 }
@@ -136,27 +136,10 @@ const ShopComponent = () => {
                                 </div>
 
                             </div>
-                            <div className="flex justify-between">
-                                <button className={`${previous !== null ? navigationOn : navigationOff}  `} onClick={e => previousPage(e)} >
-                                    <div className="flex items-center -mx-1">
-                                        <ChevronLeftIcon className="w-6 h-6 mx-1" />
-                                        <span className="mx-1">
-                                            Anterior
-                                        </span>
-                                    </div>
-                                </button>
 
-
-
-                                <button onClick={e => nextPage(e)} className={` ${next !== null ? navigationOn : navigationOff}  `}>
-                                    <div className="flex items-center -mx-1">
-                                        <span className="mx-1">
-                                            Siguiente
-                                        </span>
-
-                                        <ChevronRightIcon className="w-6 h-6 mx-1" />
-                                    </div>
-                                </button>
+                            <div className="btn-group grid grid-cols-2 mx-3">
+                                <button className={`btn btn-outline ${previous !== null ? navigationOn : navigationOff}  `} onClick={e => previousPage(e)}>Anterior</button>
+                                <button className={`btn btn-outline ${next !== null ? navigationOn : navigationOff}  `} onClick={e => nextPage(e)}>Siguiente</button>
                             </div>
 
                             {/* /End replace */}

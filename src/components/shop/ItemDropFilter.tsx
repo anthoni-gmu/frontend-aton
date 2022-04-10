@@ -30,7 +30,7 @@ const ItemDropFilter: FunctionComponent<{
                     type="checkbox"
                     onClick={() => AddCheck(id)}
                     defaultChecked={state}
-                    className="h-4 w-4 border-gray-300 rounded  focus:outline-none "
+                    className="h-4 w-4 border-gray-300 rounded  focus:outline-none checkbox checkbox-primary "
                     
                 />
                 <label

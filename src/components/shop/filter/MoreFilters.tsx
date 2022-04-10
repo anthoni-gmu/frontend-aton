@@ -46,7 +46,7 @@ const MoreFilters: FunctionComponent<{
                                     <label htmlFor='order' className='mr-3 min-w-0 flex-1 text-gray-500'
                                     >Orden</label>
                                     <select
-                                        className='my-2 font-sofiapro-light inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500'
+                                        className='my-2 font-sofiapro-light dark:bg-dark-100 dark:border-dark-500 dark:text-day-100  inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none '
                                         id='order'
                                         name='order'
                                         value={order}

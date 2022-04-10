@@ -13,7 +13,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux';
 import DropAuth from '../auth/DropAuth'
-import MovileNav from './MovileNav'
 import CartDropNav from './CartDropNav'
 import Themes from './Themes'
 import SidebarOpen from './SidebarOpen'
@@ -22,17 +21,12 @@ import { useRouter } from 'next/router'
 
 
 
-
-const classNames = (...classes: any) => {
-  return classes.filter(Boolean).join(' ')
-}
-
 const Navbar = () => {
   const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated);
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { pathname } = useRouter()
   const noSelect = ' dark:text-gray-400  '
-  const select = 'border-b-2 border-day-600 dark:border-day-200'
+  const select = 'border-b-2 border-day-600 dark:border-day-200 dark:text-gray-100 '
 
   const guestLinks = () => {
     return (
@@ -40,7 +34,7 @@ const Navbar = () => {
       <Fragment>
         <div className="flex items-center  justify-end md:w-96 space-x-2 ">
           <Link href="/auth/login">
-            <a className="text-base font-medium flex space-x-1 dark:text-gray-400  hover:text-indigo-500">
+            <a className="text-base font-medium flex space-x-1 text-dark dark:text-gray-400  hover:text-indigo-500">
               <LoginIcon className='w-6 h-6 ' />
               <span>Ingresar</span>
             </a>
@@ -124,9 +118,9 @@ const Navbar = () => {
       <div className="bg-day-200 dark:bg-dark-200 overflow-x-auto hidden md:block">
         <div className="max-w-7xl mx-auto px-4 py-3 sm:flex sm:space-y-0 sm:space-x-10 sm:px-6 lg:px-8">
           {ListNavbar.map((item) => (
-            <div key={item.name} className={` flow-root hover:border-b-2 border-b-2 border-transparent pb-1 dark:hover:text-day-200 hover:text-day-600 hover:border-day-600 dark:hover:border-day-200${pathname === item.to ? select : noSelect}`} >
+            <div key={item.name} className={`text-dark-300 font-semibold flow-root hover:border-b-2 border-b-2 border-transparent pb-1 dark:hover:text-day-200 hover:text-day-600 hover:border-day-600 dark:hover:border-day-200${pathname === item.to ? select : noSelect}`} >
               <Link href={item.to}>
-                <a className={`-m-3 p-3  flex items-center rounded-md text-base font-medium  `} >
+                <a className={`-m-3 p-3  flex items-center rounded-md text-base   `} >
                   <item.HeartIcon className="flex-shrink-0 h-6 w-6 " aria-hidden="true" />
                   <span className="ml-3">{item.name}</span>
                 </a>

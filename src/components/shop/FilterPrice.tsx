@@ -35,7 +35,7 @@ const FilterPrice: FunctionComponent<{
                                                     value={price.name}
                                                     name='price_range'
                                                     type='radio'
-                                                    className='focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded-full'
+                                                    className=' h-4 w-4  radio radio-primary checked:bg-blue-500'
                                                 />
                                                 <label className={`ml-3 min-w-0 flex-1  font-sofiapro-light ${price.name === price_range ? select : noselect}  `} >{price.name}</label>
                                             </div>

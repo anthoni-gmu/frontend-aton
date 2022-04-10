@@ -76,7 +76,19 @@ const Home: NextPage = () => {
       <div className="relative  bg-gray-50 dark:bg-dark-300 overflow-hidden">
         <div className="max-w-7xl container mx-auto px-6 flex   py-16 lg:space-x-20 ">
 
-          <div className="sm:w-1/3 lg:w-3/12 flex flex-col relative z-20 ">
+
+        <div className="hero min-h-screen" >
+    <div className="hero-overlay bg-opacity-60"></div>
+    <div className="hero-content text-center text-neutral-content">
+      <div className="max-w-md">
+        <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
+        <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+        <button className="btn btn-primary">Get Started</button>
+      </div>
+    </div>
+  </div>
+
+          {/* <div className="sm:w-1/3 lg:w-3/12 flex flex-col relative z-20 ">
 
             <span className="w-20 h-2 bg-dark-700 dark:bg-day-700 mb-12">
             </span>
@@ -126,7 +138,7 @@ const Home: NextPage = () => {
                 quality={100}
               />
             </div>
-          </div>
+          </div> */}
 
 
         </div>

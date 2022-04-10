@@ -33,11 +33,11 @@ const CartDropNav = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Popover.Panel 
-            className="z-auto bg-day-400  absolute lg:right-0 -right-10   w-auto mt-3 origin-top rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Popover.Panel
+              className="z-auto bg-day-400  absolute lg:right-0 -right-10   w-auto mt-3 origin-top rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="">
-                <div className="flex flex-col max-w-3xl px-6  dark:bg-dark-300 dark:text-coolGray-100 max-h-96 overflow-auto scrollbar scrollbar-thin scrollbar-thumb-day-600 scrollbar-track-day-100 dark:scrollbar-track-dark-100">
-                  <ul className="flex flex-col divide-y divide-coolGray-700 ">
+                <div className="flex flex-col max-w-3xl px-3  dark:bg-dark-300 dark:text-coolGray-100 max-h-80 lg:max-h-96 overflow-auto scrollbar scrollbar-thin scrollbar-thumb-day-600 scrollbar-track-day-100 dark:scrollbar-track-dark-100">
+                  <ul className="flex flex-col ">
                     {
                       items !== null && items.length !== 0 && items ? items.map((item: ICartItem) => (
                         <div key={item.product.id} className="flex flex-col  sm:flex-row sm:justify-between">
@@ -63,21 +63,26 @@ const CartDropNav = () => {
                   {
                     items !== null && items.length !== 0 && items ?
                       <div className="px-6 p-4 max-w-3xl dark:bg-dark-300 ">
-                        <div className="flex flex-wrap border-b-2 my-2">
-                          <h1 className="flex-auto text-base font-semibold ">
+                        <div className="flex flex-wrap border-b-2 my-2 text-dark-700 dark:text-gray-200">
+                          <h2 className="flex-auto text-base font-semibold ">
                             Total a pagar
-                          </h1>
-                          <div className="text-xl font-semibold text-dark-700 dark:text-gray-200 ">
+                          </h2>
+                          <h3 className="text-xl font-semibold  ">
                             ${amount}
-                          </div>
+                          </h3>
                         </div>
 
-                        <button type="button" className="py-2 px-4 hover:dark:bg-dark-300 bg-day-600 hover:bg-day-700 dark:bg-dark-700 focus:ring-day-500 focus:ring-offset-day-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                          Realizar Pago
-                        </button>
+                        <div className='py-2 px-4 hover:dark:bg-dark-300 bg-day-600 hover:bg-day-700 dark:bg-dark-700 focus:ring-day-500 focus:ring-offset-day-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg '>
+                          <Link href="/checkout" >
+                            <a
+                              className='"' >
+                              Realizar Pago
+                            </a>
+                          </Link>
+                        </div>
                         <div className='w-full flex justify-center mt-2'>
                           <Link href="/cart/cartinfo" >
-                            <a className='font-semibold hover:text-blue-700 hover:dark:text-dark' >Ver carrito</a>
+                            <a className='font-semibold hover:text-blue-700 text-gray-600 dark:text-gray-100 hover:dark:text-day-600' >Ver carrito</a>
                           </Link>
                         </div>
 
