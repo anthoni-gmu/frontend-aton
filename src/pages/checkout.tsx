@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ICartItem } from '../../types/interface'
+import { ICartItem, IFormCheckout } from '../../types/interface'
 import CartItem from '../components/cart/CartItem'
 import ConfirmationOrden from '../components/checkout/ConfirmationOrden'
 import FormDataCheckout from '../components/checkout/FormDataCheckout'
@@ -58,14 +58,22 @@ const checkout = () => {
             </div>
         )
     }
-    const showSteps = () => {
-
-        return (
-            <ul className="steps w-full text-dark-700 my-2">
-
-            </ul>
-        )
-    }
+    const [formData, setFormData] = useState<IFormCheckout>({
+        full_name: '',
+        address_line_1: '',
+        address_line_2: '',
+        city: '',
+        district: 'string',
+        zipcode: 'string',
+        phone: 'string',
+        coupon_code: '',
+        shipping_id: 0,
+    });
+    const onChange = (e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLSelectElement>): void => setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value });
+    const onSubmit = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        console.log("good")
+    };
 
     return (
         <Layout title="Pedido | aton" content='pasarela de pagos aton'>
@@ -101,8 +109,13 @@ const checkout = () => {
 
                         {
                             step === 2 && (
-                                <ShippingCost nextStep={nextStep}
+                                <ShippingCost
+                                    nextStep={nextStep}
+                                    onChange={onChange}
+                                    onSubmit={onSubmit}
                                     sumary={{ "amount": amout, "isAuthenticated": isAuthenticated }}
+                                    coupon_code={formData.coupon_code}
+                                    shipping_id={formData.shipping_id}
                                 />
                             )
                         }
