@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Layout from '../../components/layout/Layout'
 
 import OrderSumary from '../../components/cart/OrderSumary'
 import { useSelector } from 'react-redux';
 import CartItem from '../../components/cart/CartItem';
 import { ICartItem } from '../../../types/interface';
-
 const cartinfo = () => {
 
   const amout = useSelector((state: any) => state.Cart.amount)

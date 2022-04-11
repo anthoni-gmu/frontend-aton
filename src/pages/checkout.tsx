@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ICartItem } from '../../types/interface'
 import CartItem from '../components/cart/CartItem'
-import OrderSumary from '../components/cart/OrderSumary'
+import ConfirmationOrden from '../components/checkout/ConfirmationOrden'
+import FormDataCheckout from '../components/checkout/FormDataCheckout'
 import ShippingCost from '../components/checkout/ShippingCost'
 import Layout from '../components/layout/Layout'
 import { get_shipping_options } from '../redux/actions/shipping'
@@ -15,10 +16,18 @@ const checkout = () => {
             dispatch(get_shipping_options());
 
     }, [dispatch]);
-    const [step, setStep] = useState<string>("shipping cost")
 
-    const nextStep = () => {
-        setStep("form data")
+
+    const [step, setStep] = useState(2);
+
+
+
+
+    const nextStep: any = async () => {
+        setStep(step + 1)
+    }
+    const previusStep: any = async () => {
+        setStep(step - 1)
     }
 
     const amout = useSelector((state: any) => state.Cart.amount)
@@ -28,6 +37,7 @@ const checkout = () => {
 
 
     const showItems = () => {
+
         return (
             <div>
                 {
@@ -48,39 +58,74 @@ const checkout = () => {
             </div>
         )
     }
+    const showSteps = () => {
+
+        return (
+            <ul className="steps w-full text-dark-700 my-2">
+
+            </ul>
+        )
+    }
 
     return (
         <Layout title="Pedido | aton" content='pasarela de pagos aton'>
-            <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                <ul className="steps w-full">
-                    <li className="step step-primary">Register</li>
-                    <li className="step step-primary">Choose plan</li>
-                    <li className="step">Purchase</li>
-                    <li className="step">Receive Product</li>
-                </ul>
-                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Carrito de Compras </h1>
-                <div className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
-                    <section aria-labelledby="cart-heading" className="lg:col-span-7">
-                        <h2 id="cart-heading" className="sr-only">
-                            Items in your shopping cart
-                        </h2>
+            <div className='bg-day-300 dark:bg-dark-300' >
+                <div className="max-w-2xl mx-auto pt-4 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                    <ul className="steps w-full text-dark-700 my-2">
+                        <li className={`step ${step >= 1 && "step-info"}`}>
+                            <span className='dark:text-cyan-600 font-semibold'>
+                                Carrito
+                            </span>
+                        </li>
+                        <li className={`step ${step >= 2 && "step-info"}`}>
+                            <span className='dark:text-cyan-600 font-semibold'>
+                                Coste de envio
+                            </span>
+                        </li>
+                        <li className={`step ${step >= 3 && "step-info"}`}>
+                            <span className='dark:text-cyan-600 font-semibold'>
+                                Datos de envio
+                            </span>
+                        </li>
+                        <li className={`step ${step >= 4 && "step-info"}`}>
+                            <span className='dark:text-cyan-600 font-semibold'>
+                                Confirmar Compra
+                            </span></li>
+                    </ul>
 
-                        <div className="border-t border-b border-gray-200 divide-y divide-gray-200">
+
+                    <div className="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
+                        <section aria-labelledby="cart-heading" className="lg:col-span-7">
                             {total_items > 0 ? showItems() : <>No products</>}
-                        </div>
-                    </section>
+                        </section>
 
-                    {
-                        step === "shipping cost" ? <ShippingCost nextStep={nextStep}
-                            sumary={{ "amount": amout, "isAuthenticated": isAuthenticated }}
-                        /> : <OrderSumary
-                            sumary={{ "amount": amout, "isAuthenticated": isAuthenticated }}
-                        />
-                    }
+                        {
+                            step === 2 && (
+                                <ShippingCost nextStep={nextStep}
+                                    sumary={{ "amount": amout, "isAuthenticated": isAuthenticated }}
+                                />
+                            )
+                        }
+                        {
+                            step === 3 && (
+                                <FormDataCheckout nextStep={nextStep}
+                                    sumary={{ "amount": amout, "isAuthenticated": isAuthenticated }}
+                                />
+                            )
+                        }
+                        {
+                            step === 4 && (
+                                <ConfirmationOrden nextStep={nextStep}
+                                    sumary={{ "amount": amout, "isAuthenticated": isAuthenticated }}
+                                />
+                            )
+                        }
 
 
 
 
+
+                    </div>
                 </div>
             </div>
         </Layout>

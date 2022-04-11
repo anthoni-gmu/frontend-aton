@@ -1,6 +1,5 @@
 import { SearchIcon, TrashIcon } from '@heroicons/react/outline'
 import React, { useEffect, useState } from 'react'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import ShopMovile from './ShopMovile';
 import ShopHead from './ShopHead';
 import { useDispatch, useSelector } from 'react-redux';
