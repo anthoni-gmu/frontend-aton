@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { check_coupon } from '../../redux/actions/coupon';
 
 const CouponApply: FunctionComponent<{
+    setCoupon: (value: string) => void;
     onChange: (e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLSelectElement>) => void;
     coupon_code: string;
 }> = ({ onChange,
-    coupon_code
+    coupon_code, setCoupon
 }) => {
         const dispatch = useDispatch();
         const coupon = useSelector((state: any) => state.Coupon.coupon)
@@ -15,6 +16,7 @@ const CouponApply: FunctionComponent<{
             e.preventDefault();
             if (dispatch && dispatch !== null && dispatch !== undefined) {
                 dispatch(check_coupon(coupon_code))
+                setCoupon(coupon_code)
             }
         }
 
@@ -35,9 +37,9 @@ const CouponApply: FunctionComponent<{
                         </div>
                     </div>
                     <div className="px-2">
-                        <button 
-                        onClick={e => applyCoupon(e)} 
-                        className=" block w-full max-w-xs mx-auto dark:bg-cyan-600 bg-indigo-600 border border-transparent rounded-md shadow-sm py-1 px-4 text-base font-medium text-white hover:bg-indigo-700 dark:hover:bg-cyan-700 focus:outline-none  ">VALIDAR</button>
+                        <button
+                            onClick={e => applyCoupon(e)}
+                            className=" block w-full max-w-xs mx-auto dark:bg-cyan-600 bg-indigo-600 border border-transparent rounded-md shadow-sm py-1 px-4 text-base font-medium text-white hover:bg-indigo-700 dark:hover:bg-cyan-700 focus:outline-none  ">VALIDAR</button>
                     </div>
                 </div>
 

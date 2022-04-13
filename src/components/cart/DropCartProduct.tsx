@@ -6,6 +6,7 @@ import { remove_item } from '../../redux/actions/cart';
 import { setAlert } from '../../redux/actions/alert';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const DropCartProduct: FunctionComponent<{
     item: ICartItem;
@@ -17,6 +18,7 @@ const DropCartProduct: FunctionComponent<{
     }
 }) => {
         const dispatch = useDispatch();
+        const { pathname } = useRouter();
 
         const removeItemHandler = () => {
             if (dispatch && dispatch !== null && dispatch !== undefined) {
@@ -49,9 +51,12 @@ const DropCartProduct: FunctionComponent<{
                                 </Link>
                                 <p className="text-sm dark:text-coolGray-400 lowercase hidden md:block">{product.get_category}</p>
                             </div>
-                            <button type="button" onClick={removeItemHandler} className="flex items-center px-2 py-1 pl-0 space-x-1">
-                                <TrashIcon className='w-6 h-6 hover:text-red-500' />
-                            </button>
+                            {
+                                pathname !== '/checkout' ? (<button type="button" onClick={removeItemHandler} className="flex items-center px-2 py-1 pl-0 space-x-1">
+                                    <TrashIcon className='w-6 h-6 hover:text-red-500' />
+                                </button>) : ""
+                            }
+
                         </div>
 
                         <div className="flex text-sm divide-x">

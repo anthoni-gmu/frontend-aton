@@ -7,6 +7,7 @@ import CouponApply from './CouponApply';
 
 const ShippingCost: FunctionComponent<{
     sumary: IOrdenSumary;
+    setCoupon: (value:string) => void;
     nextStep: () => void;
     onSubmit: (e: React.SyntheticEvent) => void;
     onChange: (e: React.FormEvent<HTMLInputElement> | React.FormEvent<HTMLSelectElement>) => void;
@@ -21,7 +22,8 @@ const ShippingCost: FunctionComponent<{
     nextStep,
     onChange,
     coupon_code,
-    shipping_id
+    shipping_id,
+    setCoupon
 }) => {
         const shipping = useSelector((state: any) => state.Shipping.shipping)
 
@@ -57,10 +59,7 @@ const ShippingCost: FunctionComponent<{
         }
 
         return (
-            <section
-                aria-labelledby="summary-heading"
-                className="mt-16 bg-gray-50 dark:bg-dark-500 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5"
-            >
+            
 
                 <>
                     <h2 id="summary-heading" className="text-lg font-medium text-gray-900 dark:text-day-100">
@@ -79,7 +78,7 @@ const ShippingCost: FunctionComponent<{
                                                 <input
                                                     type="radio"
                                                     className="form-radio h-5 w-5  radio dark:checked:bg-cyan-600 checked:bg-day-100"
-
+                                                    onChange={e => onChange(e)}
                                                     value={shipping_option.id}
                                                     name='shipping_id'
                                                     required
@@ -94,30 +93,18 @@ const ShippingCost: FunctionComponent<{
                                     </div>
                                 ))
                             }
-                            <CouponApply onChange={onChange}
+                            <CouponApply 
+                            setCoupon={setCoupon}
+                            onChange={onChange}
                                 coupon_code={coupon_code} />
 
                         </div>
-                        <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                            <dt className="flex text-sm text-gray-600 dark:text-day-100">
-                                <span>Tax estimate</span>
-                                <a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
-                                    <span className="sr-only">Learn more about how tax is calculated</span>
-                                    <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
-                                </a>
-                            </dt>
-                            <dd className="text-sm font-medium text-gray-900 dark:text-day-100">$8.32</dd>
-                        </div>
-                        <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                            <dt className="text-base font-medium text-gray-900 dark:text-day-100">Order total</dt>
-                            <dd className="text-base font-medium text-gray-900 dark:text-day-100">${amount.toFixed(2)}</dd>
-                        </div>
+                        
                     </dl>
-                </>
 
                 {showButton()}
+                </>
 
-            </section>
         )
     }
 
