@@ -21,6 +21,17 @@ export interface IProfile {
     zipcode: string;
     phone: string;
 }
+export interface IFormCheckout {
+    full_name: string,
+    address_line_1: string;
+    address_line_2: string;
+    city: string;
+    district: string;
+    zipcode: string;
+    phone: string;
+    coupon_code:string,
+    shipping_id:number,
+}
 export interface IUser {
     id: number,
     email: string;
@@ -47,7 +58,7 @@ export interface INavbarDashboard {
     HeartIcon(props: React.ComponentProps<'svg'>): JSX.Element
 }
 
-export interface FormFilter  {
+export interface FormFilter {
     brandsform: number[];
     categoriesform: number[];
     order: string;

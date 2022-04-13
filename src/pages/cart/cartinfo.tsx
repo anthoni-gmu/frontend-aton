@@ -6,12 +6,10 @@ import { useSelector } from 'react-redux';
 import CartItem from '../../components/cart/CartItem';
 import { ICartItem } from '../../../types/interface';
 const cartinfo = () => {
-
   const amout = useSelector((state: any) => state.Cart.amount)
   const items = useSelector((state: any) => state.Cart.items)
   const total_items = useSelector((state: any) => state.Cart.total_items)
   const isAuthenticated = useSelector((state: any) => state.Auth.isAuthenticated)
-
 
   const showItems = () => {
     return (

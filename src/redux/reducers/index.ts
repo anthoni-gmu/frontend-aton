@@ -7,6 +7,8 @@ import Cart from "./cart"
 import Profile from "./profile"
 import Wishlist from "./wishlist"
 import Shipping from "./shipping"
+import Coupon from "./coupon"
+import Payment from "./payment"
 export default combineReducers({
     Alert,
     Auth,
@@ -14,5 +16,7 @@ export default combineReducers({
     Cart,
     Profile,
     Wishlist,
-    Shipping
+    Shipping,
+    Coupon,
+    Payment
 })

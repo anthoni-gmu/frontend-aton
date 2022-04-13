@@ -1,6 +1,7 @@
-import { CheckIcon, ClockIcon, RefreshIcon, XIcon,TrashIcon } from '@heroicons/react/outline';
+import { CheckIcon, ClockIcon, RefreshIcon, XIcon, TrashIcon } from '@heroicons/react/outline';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { ICartItem } from '../../../types/interface';
@@ -18,6 +19,7 @@ const CartItem: FunctionComponent<{
     }
 }) => {
         const dispatch = useDispatch();
+        const { pathname } = useRouter();
 
         const [formData, setFormData] = useState({
             item_count: 1
@@ -85,50 +87,60 @@ const CartItem: FunctionComponent<{
                                 <p className="">Marca:</p>
                                 <p className="ml-3 ">{product.get_brand}</p>
                             </div>
-                            <form onSubmit={e => onSubmit(e)}>
-                                <div className='flex justify-start items-center space-x-3 my-3'>
-                                    <select
-                                        name='item_count'
-                                        onChange={(e) => onChange(e)}
-                                        value={item_count}
-                                        className="my-2 font-sofiapro-light dark:bg-dark-100 dark:border-dark-500 dark:text-day-100  inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
-                                    >
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                    </select>
+                            {
+                                pathname !== '/checkout' ? (<form onSubmit={e => onSubmit(e)}>
+                                    <div className='flex justify-start items-center space-x-3 my-3'>
+                                        <select
+                                            name='item_count'
+                                            onChange={(e) => onChange(e)}
+                                            value={item_count}
+                                            className="my-2 font-sofiapro-light dark:bg-dark-100 dark:border-dark-500 dark:text-day-100  inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                                        >
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                        </select>
+                                        <button
+                                            type="submit"
+                                            className="-m-2 p-2 inline-flex text-gray-700 hover:text-gray-500 dark:text-day-400 dark:hover:text-sky-600 ">
+                                            <RefreshIcon className='h-6 w-6' />
+                                            <span className="mx-2 ">Actualizar</span>
+                                        </button>
+
+                                    </div>
+
+                                </form>) : (
+                                    <div className="my-3 flex text-sm text-gray-500 dark:text-white">
+                                        <p className="">Cantidad:</p>
+                                        <p className="ml-3 ">{item_count}</p>
+                                    </div>
+                                )
+                            }
+
+                        </div>
+
+
+                        <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-sky-600">$ {product.price}</p>
+                        {
+                            pathname !== '/checkout' ? (<div className="mt-4 sm:mt-0 sm:pr-9">
+
+                                <div className="absolute top-0 right-0">
                                     <button
-                                        type="submit"
-                                        className="-m-2 p-2 inline-flex text-gray-700 hover:text-gray-500 dark:text-day-400 dark:hover:text-sky-600 ">
-                                        <RefreshIcon className='h-6 w-6' />
-                                        <span className="mx-2 ">Actualizar</span>
+                                        onClick={removeItemHandler}
+                                        className="-m-2 p-2 inline-flex text-red-400 hover:text-red-500 ">
+                                        <span className="sr-only">Remove</span>
+                                        <TrashIcon className="h-5 w-5" aria-hidden="true" />
                                     </button>
-
                                 </div>
+                            </div>) : ''
+                        }
 
-                            </form>
-                        </div>
-
-                        <div className="mt-4 sm:mt-0 sm:pr-9">
-
-                            <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-sky-600">$ {product.price}</p>
-
-
-                            <div className="absolute top-0 right-0">
-                                <button
-                                    onClick={removeItemHandler}
-                                    className="-m-2 p-2 inline-flex text-red-400 hover:text-red-500 ">
-                                    <span className="sr-only">Remove</span>
-                                    <TrashIcon className="h-5 w-5" aria-hidden="true" />
-                                </button>
-                            </div>
-                        </div>
                     </div>
 
                     <p className="mt-4 flex text-sm text-gray-700 space-x-2">
